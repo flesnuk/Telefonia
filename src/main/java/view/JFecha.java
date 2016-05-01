@@ -1,8 +1,13 @@
 package view;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import excepciones.FechaInvalidaException;
 
 public class JFecha extends JPanel {
 	
@@ -28,4 +33,19 @@ public class JFecha extends JPanel {
 		super.add(sndSlash, null);
 		super.add(anyo, null);
 	}
+	
+	public Calendar getFecha() throws FechaInvalidaException{
+		Calendar cal = new GregorianCalendar(Integer.parseInt(anyo.getText()),
+				Integer.parseInt(mes.getText())-1,
+				Integer.parseInt(dia.getText()));
+		cal.setLenient(false);
+		try {
+		    cal.getTime();
+		}
+		catch (Exception e) {
+		  throw new FechaInvalidaException();
+		}
+		return cal;
+	}
+	
 }

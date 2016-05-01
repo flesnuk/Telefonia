@@ -5,6 +5,7 @@ import modelo.Modelo;
 import view.Ventana;
 import clientes.Cliente;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.FechaInvalidaException;
 
 public class Controlador {
 	
@@ -24,8 +25,11 @@ public class Controlador {
 		modelo.anyadePersona(p);
 	}
 	
-	public void anyadeLlamada() throws ClienteNoSeleccionadoException {	
-		Llamada l = vista.getLlamada();
-		modelo.anyadeLlamada(l);
+	public void anyadeLlamada() throws ClienteNoSeleccionadoException, FechaInvalidaException {	
+		Llamada l = null;
+		l = vista.getLlamada();
+		modelo.anyadeLlamada(l); 	
+		
+		
 	}
 }

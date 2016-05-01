@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import java.util.Collection;
 
 import javax.swing.JButton;
@@ -22,6 +21,8 @@ import llamadas.Llamada;
 import modelo.Modelo;
 import controlador.Controlador;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.FechaInvalidaException;
+import utilidades.FechaToString;
 
 public class VentanaCliente extends JPanel{
 
@@ -39,6 +40,7 @@ public class VentanaCliente extends JPanel{
 	private Controlador controlador;
 	private Escuchador escuchador;
 	private JLabel error;
+	private JFecha fecha;
 
 	public VentanaCliente(Ventana v){
 		modelo = v.getModelo();
@@ -46,6 +48,7 @@ public class VentanaCliente extends JPanel{
 		escuchador = new Escuchador();
 		super.setLayout(new BorderLayout());
 		error = new JLabel("                 ");
+		fecha = new JFecha();
 		arriba = new  JPanel();
 		JTLlamada = new JTextField(10);
 		JTDuracion = new JTextField(10);	
@@ -56,13 +59,14 @@ public class VentanaCliente extends JPanel{
 		arriba.add(JTLlamada, BorderLayout.NORTH);
 		arriba.add(new JLabel("Duracion"), BorderLayout.NORTH);
 		arriba.add(JTDuracion, BorderLayout.NORTH);
+		arriba.add(fecha, null);
 		arriba.add(error, BorderLayout.NORTH);
 		super.add(arriba, BorderLayout.NORTH);
 		inicializarTablaClientes();
 		tabla = new JTable(tablaClientes);
 		tablaCli = new JScrollPane(tabla);
 		tablaCli.setPreferredSize(new Dimension(200, 100));
-		super.add(tablaCli, null);
+		super.add(tablaCli, null);		
 	}
 	
 	
@@ -72,7 +76,7 @@ public class VentanaCliente extends JPanel{
 	
 	public void inicializarTablaClientes(){
 		tablaClientes = new DefaultTableModel();
-		Object[] nombreCol = {"Numero","Duracion"};
+		Object[] nombreCol = {"Numero","Duracion","Fecha"};
 		tablaClientes.setColumnIdentifiers(nombreCol);		
 	}
 	
@@ -81,11 +85,14 @@ public class VentanaCliente extends JPanel{
 		inicializarTablaClientes();		
 		tabla.setModel(tablaClientes);
 		if (clientes==null) return;
-		Object[] col = new Object[2];
+		Object[] col = new Object[3];
 		for (Llamada l : clientes){
+			if (l!=null){ 
 			col[0]=l.getTelefono();
 			col[1]=l.getDuracion();
+			col[2]=FechaToString.toString(l.getFecha());
 			((DefaultTableModel) tabla.getModel()).addRow(col);
+			}
 		}
 	}
 	
@@ -96,10 +103,13 @@ public class VentanaCliente extends JPanel{
           int[] x = null; 
             if(texto.equals("Add")){
                 try {
-					controlador.anyadeLlamada();
-					error.setText("            ");
+                	error.setText("                 ");
+					controlador.anyadeLlamada();										
 				} catch (ClienteNoSeleccionadoException e1) {
 					error.setText("NoSelect");
+					error.setForeground(Color.RED);
+				} catch (FechaInvalidaException e2) {
+					error.setText("NoFecha");
 					error.setForeground(Color.RED);
 				}
             }
@@ -120,7 +130,18 @@ public class VentanaCliente extends JPanel{
     }
 	
 	public Llamada getLlamada(){
-		return new Llamada(Integer.parseInt(JTLlamada.getText()), Calendar.getInstance(), Double.parseDouble(JTDuracion.getText()));
+		Llamada l = null;
+		try {
+			l = new Llamada(Integer.parseInt(JTLlamada.getText()), 
+					fecha.getFecha(), 
+					Double.parseDouble(JTDuracion.getText()));
+			
+		} catch (NumberFormatException e) {
+			error.setText("NumNoVal");
+		} catch (FechaInvalidaException e) {
+			error.setText("FechaNo");
+		}
+		return l;
 	}
 	
 	

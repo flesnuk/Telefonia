@@ -82,7 +82,7 @@ public class Ventana {
 		tablaCli.setPreferredSize(new Dimension(200, 100));
 		arriba.add(boton, null);
 		
-		JButton boton2 = new JButton("Select");
+		JButton boton2 = new JButton("Deselect");
 		boton2.addActionListener(escuchador);
 		arriba.add(boton2, null);
 		
@@ -125,21 +125,24 @@ public class Ventana {
                 controlador.anyadePersona();
             }
             else {   
-            	Cliente aux = modelo.getCliente((String)tablaClientes.getValueAt(tabla.getSelectedRow(), 0));
-            	modelo.selectCliente(aux);  
-            	try {
-					abajo.nuevaLlamada();
-				} catch (ClienteNoSeleccionadoException e1) {
-					System.out.println("CNS");
-				}
+            	
             }
             
         }
 
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			 if(!e.getValueIsAdjusting())
-				System.out.println(tabla.getSelectedRow()+1000);
+			 if(!e.getValueIsAdjusting()){
+				Cliente aux = modelo.getCliente((String)tablaClientes.getValueAt(tabla.getSelectedRow(), 0));
+				modelo.selectCliente(aux);  	
+			 }
+			 try {
+					abajo.nuevaLlamada();
+			 } catch (ClienteNoSeleccionadoException e1) {
+					
+			 }
+				
+				//System.out.println(tabla.getSelectedRow()+1000);
 			
 		}
     }
