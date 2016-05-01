@@ -147,8 +147,7 @@ public class Ventana {
 		}
     }
 	
-	public Cliente getPersona(){
-		
+	public Cliente getPersona(){		
 		return new Persona(JTNIF.getText(),JTnombre.getText(),Calendar.getInstance(),new Tarifa(4));
 	}
 	
