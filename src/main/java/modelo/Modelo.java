@@ -34,7 +34,8 @@ public class Modelo {
 	}
 	
 	public void anyadeLlamada(Llamada l) throws ClienteNoSeleccionadoException{
-		g.addLlamada(l);
+		if(l!=null)
+			g.addLlamada(l);
 		vista.nuevaLlamada();
 	}
 	
