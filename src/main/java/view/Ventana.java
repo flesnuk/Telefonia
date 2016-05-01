@@ -138,12 +138,7 @@ public class Ventana {
 			 }
 			 try {
 					abajo.nuevaLlamada();
-			 } catch (ClienteNoSeleccionadoException e1) {
-					
-			 }
-				
-				//System.out.println(tabla.getSelectedRow()+1000);
-			
+			 } catch (ClienteNoSeleccionadoException e1) { }
 		}
     }
 	
