@@ -86,12 +86,13 @@ public class VentanaCliente extends JPanel{
 		tabla.setModel(tablaClientes);
 		if (clientes==null) return;
 		Object[] col = new Object[3];
-		for (Llamada l : clientes){			
+		for (Llamada l : clientes){
+			if (l!=null){ 
 			col[0]=l.getTelefono();
 			col[1]=l.getDuracion();
 			col[2]=FechaToString.toString(l.getFecha());
 			((DefaultTableModel) tabla.getModel()).addRow(col);
-			
+			}
 		}
 	}
 	
