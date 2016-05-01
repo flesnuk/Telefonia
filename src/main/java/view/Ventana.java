@@ -92,6 +92,7 @@ public class Ventana {
 		arriba.add(JTnombre, null);
 		tabla.getSelectionModel().addListSelectionListener(escuchador);
 		frame.getContentPane().add(arriba, BorderLayout.NORTH);
+		arriba.add(new JFecha(), null);
 		frame.getContentPane().add(tablaCli, BorderLayout.CENTER);	
 		abajo = new VentanaCliente(this);
 		frame.getContentPane().add(abajo, BorderLayout.SOUTH);
@@ -109,7 +110,7 @@ public class Ventana {
 				} catch (ClassNotFoundException | InstantiationException
 						| IllegalAccessException
 						| UnsupportedLookAndFeelException e) {
-					e.printStackTrace();
+					System.out.println("L&F");
 				}
 				GUI();
 			}
@@ -129,8 +130,7 @@ public class Ventana {
             	try {
 					abajo.nuevaLlamada();
 				} catch (ClienteNoSeleccionadoException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println("CNS");
 				}
             }
             

@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,12 +38,14 @@ public class VentanaCliente extends JPanel{
 	private JPanel arriba;
 	private Controlador controlador;
 	private Escuchador escuchador;
+	private JLabel error;
 
 	public VentanaCliente(Ventana v){
 		modelo = v.getModelo();
 		controlador = v.getControlador();
 		escuchador = new Escuchador();
 		super.setLayout(new BorderLayout());
+		error = new JLabel("                 ");
 		arriba = new  JPanel();
 		JTLlamada = new JTextField(10);
 		JTDuracion = new JTextField(10);	
@@ -53,6 +56,7 @@ public class VentanaCliente extends JPanel{
 		arriba.add(JTLlamada, BorderLayout.NORTH);
 		arriba.add(new JLabel("Duracion"), BorderLayout.NORTH);
 		arriba.add(JTDuracion, BorderLayout.NORTH);
+		arriba.add(error, BorderLayout.NORTH);
 		super.add(arriba, BorderLayout.NORTH);
 		inicializarTablaClientes();
 		tabla = new JTable(tablaClientes);
@@ -93,9 +97,10 @@ public class VentanaCliente extends JPanel{
             if(texto.equals("Add")){
                 try {
 					controlador.anyadeLlamada();
+					error.setText("            ");
 				} catch (ClienteNoSeleccionadoException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					error.setText("NoSelect");
+					error.setForeground(Color.RED);
 				}
             }
             else {
