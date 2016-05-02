@@ -95,6 +95,7 @@ public class Ventana {
 		arriba.add(new JFecha(), null);
 		frame.getContentPane().add(tablaCli, BorderLayout.CENTER);	
 		abajo = new VentanaCliente(this);
+		abajo.setVisible(false);
 		frame.getContentPane().add(abajo, BorderLayout.SOUTH);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -125,7 +126,8 @@ public class Ventana {
                 controlador.anyadePersona();
             }
             else {   
-            	
+            	tabla.clearSelection();
+            	modelo.selectCliente(null);
             }
             
         }
@@ -133,8 +135,12 @@ public class Ventana {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			 if(!e.getValueIsAdjusting()){
-				Cliente aux = modelo.getCliente((String)tablaClientes.getValueAt(tabla.getSelectedRow(), 0));
-				modelo.selectCliente(aux);  	
+				int i = tabla.getSelectedRow();				
+				if(i>=0){		
+					abajo.setVisible(true);
+					Cliente aux = modelo.getCliente((String)tablaClientes.getValueAt(i, 0));
+					modelo.selectCliente(aux); 
+				}				 	
 			 }
 			 try {
 					abajo.nuevaLlamada();
