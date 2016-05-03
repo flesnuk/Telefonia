@@ -10,19 +10,17 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import clientes.Cliente;
 import clientes.FabricaClientes;
-import excepciones.ClienteNoSeleccionadoException;
 import excepciones.FechaInvalidaException;
 import tarifas.Tarifa;
-import view.Ventana.Escuchador;
 
 public class FormularioCliente extends JPanel{
 	
 	private static final long serialVersionUID = 4365585455888758995L;
+	private Ventana vista;
+	
 	private JComboBox<String> seleccPoE;
 	private JTextField JTNIF;
 	private JTextField JTnombre; 
@@ -40,9 +38,9 @@ public class FormularioCliente extends JPanel{
 	private JLabel errorFormato;
 
 	public FormularioCliente(Ventana vista){
-		//escuchador=vista.getEscuchador();
+		this.vista=vista;
 		escuchador = new Escuchador();
-		inicializaVariables();
+		inicializaVariables();		
 		super.setLayout(new FlowLayout());
 		super.add(seleccPoE, null);
 		super.add(new JLabel("NIF"), null);
@@ -138,7 +136,7 @@ public class FormularioCliente extends JPanel{
           JButton boton = (JButton)e.getSource();
           String texto = boton.getText();
             if(texto.equals("Add")){
-            	System.out.println("H");
+            	vista.getControlador().anyadePersona();
             }
       
         }
