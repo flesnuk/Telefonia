@@ -48,6 +48,7 @@ public class VentanaLlamadas extends JPanel{
 		escuchador = new Escuchador();
 		super.setLayout(new BorderLayout());
 		error = new JLabel("                 ");
+		error.setForeground(Color.RED);
 		fecha = new JFecha();
 		arriba = new  JPanel();
 		JTLlamada = new JTextField(10);
@@ -107,10 +108,8 @@ public class VentanaLlamadas extends JPanel{
 					controlador.anyadeLlamada();										
 				} catch (ClienteNoSeleccionadoException e1) {
 					error.setText("NoSelect");
-					error.setForeground(Color.RED);
 				} catch (FechaInvalidaException e2) {
 					error.setText("NoFecha");
-					error.setForeground(Color.RED);
 				}
             }
             else {
