@@ -24,16 +24,16 @@ import excepciones.ClienteNoSeleccionadoException;
 import excepciones.FechaInvalidaException;
 import utilidades.FechaToString;
 
-public class VentanaCliente extends JPanel{
+public class VentanaLlamadas extends JPanel{
 
 	private static final long serialVersionUID = -7188331620575302073L;
 	
 	private JPanel pan;
 	
 	private Modelo modelo;
-	private DefaultTableModel tablaClientes;
+	private DefaultTableModel tablaLlamadas;
 	private JTable tabla;
-	private JScrollPane tablaCli;
+	private JScrollPane tablaLlam;
 	private JTextField JTLlamada;
 	private JTextField JTDuracion;
 	private JPanel arriba;
@@ -42,7 +42,7 @@ public class VentanaCliente extends JPanel{
 	private JLabel error;
 	private JFecha fecha;
 
-	public VentanaCliente(Ventana v){
+	public VentanaLlamadas(Ventana v){
 		modelo = v.getModelo();
 		controlador = v.getControlador();
 		escuchador = new Escuchador();
@@ -63,10 +63,10 @@ public class VentanaCliente extends JPanel{
 		arriba.add(error, BorderLayout.NORTH);
 		super.add(arriba, BorderLayout.NORTH);
 		inicializarTablaClientes();
-		tabla = new JTable(tablaClientes);
-		tablaCli = new JScrollPane(tabla);
-		tablaCli.setPreferredSize(new Dimension(200, 100));
-		super.add(tablaCli, null);		
+		tabla = new JTable(tablaLlamadas);
+		tablaLlam = new JScrollPane(tabla);
+		tablaLlam.setPreferredSize(new Dimension(200, 100));
+		super.add(tablaLlam, null);		
 	}
 	
 	
@@ -75,18 +75,18 @@ public class VentanaCliente extends JPanel{
 	}
 	
 	public void inicializarTablaClientes(){
-		tablaClientes = new DefaultTableModel();
+		tablaLlamadas = new DefaultTableModel();
 		Object[] nombreCol = {"Numero","Duracion","Fecha"};
-		tablaClientes.setColumnIdentifiers(nombreCol);		
+		tablaLlamadas.setColumnIdentifiers(nombreCol);		
 	}
 	
 	public void nuevaLlamada() throws ClienteNoSeleccionadoException{
-		Collection<Llamada> clientes = modelo.getLlamadas();		
+		Collection<Llamada> llamadas = modelo.getLlamadas();		
 		inicializarTablaClientes();		
-		tabla.setModel(tablaClientes);
-		if (clientes==null) return;
+		tabla.setModel(tablaLlamadas);
+		if (llamadas==null) return;
 		Object[] col = new Object[3];
-		for (Llamada l : clientes){
+		for (Llamada l : llamadas){
 			if (l!=null){ 
 			col[0]=l.getTelefono();
 			col[1]=l.getDuracion();

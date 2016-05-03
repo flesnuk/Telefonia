@@ -41,8 +41,8 @@ public class Ventana {
 	private JTable tabla;
 	private JScrollPane tablaCli; 
 	private Escuchador escuchador;
-	private JPanel arriba;
-	private VentanaCliente abajo;
+	private FormularioCliente arriba;
+	private VentanaLlamadas abajo;
 	private JFrame frame;
 	
 	public Ventana(){
@@ -65,11 +65,15 @@ public class Ventana {
 		return controlador;
     }
 	
+	public Escuchador getEscuchador() {
+		return escuchador;
+    }
+	
 	public void GUI(){
 		frame = new JFrame();
 		frame.setLayout(new GridLayout(3,1));
-		arriba = new JPanel();		
-		arriba.setLayout(new FlowLayout());
+		arriba = new FormularioCliente(this);		
+		//arriba.setLayout(new FlowLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inicializarTablaClientes();
 		escuchador = new Escuchador();
@@ -80,21 +84,21 @@ public class Ventana {
 		tabla = new JTable(tablaClientes);
 		tablaCli = new JScrollPane(tabla);
 		tablaCli.setPreferredSize(new Dimension(200, 100));
-		arriba.add(boton, null);
+		//arriba.add(boton, null);
 		
 		JButton boton2 = new JButton("Deselect");
 		boton2.addActionListener(escuchador);
-		arriba.add(boton2, null);
+		//arriba.add(boton2, null);
 		
-		arriba.add(new JLabel("NIF"), null);
-		arriba.add(JTNIF, null);
-		arriba.add(new JLabel("Nombre"), null);
-		arriba.add(JTnombre, null);
+		//arriba.add(new JLabel("NIF"), null);
+		//arriba.add(JTNIF, null);
+		//arriba.add(new JLabel("Nombre"), null);
+		//arriba.add(JTnombre, null);
 		tabla.getSelectionModel().addListSelectionListener(escuchador);
 		frame.getContentPane().add(arriba, BorderLayout.NORTH);
-		arriba.add(new JFecha(), null);
+		//arriba.add(new JFecha(), null);
 		frame.getContentPane().add(tablaCli, BorderLayout.CENTER);	
-		abajo = new VentanaCliente(this);
+		abajo = new VentanaLlamadas(this);
 		abajo.setVisible(false);
 		frame.getContentPane().add(abajo, BorderLayout.SOUTH);
 		frame.pack();
@@ -123,6 +127,7 @@ public class Ventana {
           JButton boton = (JButton)e.getSource();
           String texto = boton.getText();
             if(texto.equals("Add")){
+            	System.out.println("H");
                 controlador.anyadePersona();
             }
             else {   
@@ -149,7 +154,8 @@ public class Ventana {
     }
 	
 	public Cliente getPersona(){		
-		return new Persona(JTNIF.getText(),JTnombre.getText(),Calendar.getInstance(),new Tarifa(4));
+		//return new Persona(JTNIF.getText(),JTnombre.getText(),Calendar.getInstance(),new Tarifa(4));
+		return arriba.getCliente();
 	}
 	
 	
