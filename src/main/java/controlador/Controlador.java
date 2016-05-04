@@ -21,14 +21,17 @@ public class Controlador {
     }
 	
 	public void anyadePersona() {			
-	    Cliente p = vista.getPersona();
-		modelo.anyadePersona(p);
+	    Cliente p = null;
+	    p = vista.getPersona();
+	    if (p!=null)
+	    	modelo.anyadePersona(p);
 	}
 	
 	public void anyadeLlamada() throws ClienteNoSeleccionadoException, FechaInvalidaException {	
 		Llamada l = null;
 		l = vista.getLlamada();
-		modelo.anyadeLlamada(l); 	
+		if (l!=null)
+			modelo.anyadeLlamada(l); 	
 		
 		
 	}

@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import llamadas.Llamada;
@@ -47,7 +45,7 @@ public class VentanaLlamadas extends JPanel{
 		controlador = v.getControlador();
 		escuchador = new Escuchador();
 		super.setLayout(new BorderLayout());
-		error = new JLabel("                 ");
+		error = new JLabel("                                    ");
 		error.setForeground(Color.RED);
 		fecha = new JFecha();
 		arriba = new  JPanel();
@@ -87,21 +85,18 @@ public class VentanaLlamadas extends JPanel{
 		tabla.setModel(tablaLlamadas);
 		if (llamadas==null) return;
 		Object[] col = new Object[3];
-		for (Llamada l : llamadas){
-			if (l!=null){ 
+		for (Llamada l : llamadas){			
 			col[0]=l.getTelefono();
 			col[1]=l.getDuracion();
 			col[2]=FechaToString.toString(l.getFecha());
-			((DefaultTableModel) tabla.getModel()).addRow(col);
-			}
+			((DefaultTableModel) tabla.getModel()).addRow(col);			
 		}
 	}
 	
-	class Escuchador implements ActionListener, ListSelectionListener {
+	class Escuchador implements ActionListener {
         public void actionPerformed(ActionEvent e) {
           JButton boton = (JButton)e.getSource();
           String texto = boton.getText();
-          int[] x = null; 
             if(texto.equals("Add")){
                 try {
                 	error.setText("                 ");
@@ -111,21 +106,9 @@ public class VentanaLlamadas extends JPanel{
 				} catch (FechaInvalidaException e2) {
 					error.setText("NoFecha");
 				}
-            }
-            else {
-            	x = tabla.getSelectedRows();            	
-            }
-            if(x!=null)
-            for (int a : x)
-            	System.out.println(a);
+            }         
         }
-
-		@Override
-		public void valueChanged(ListSelectionEvent e) {
-			 if(!e.getValueIsAdjusting())
-				System.out.println(tabla.getSelectedRow()+1000);
-			
-		}
+		
     }
 	
 	public Llamada getLlamada(){
@@ -136,9 +119,9 @@ public class VentanaLlamadas extends JPanel{
 					Double.parseDouble(JTDuracion.getText()));
 			
 		} catch (NumberFormatException e) {
-			error.setText("NumNoVal");
+			error.setText("Número no válido");
 		} catch (FechaInvalidaException e) {
-			error.setText("FechaNo");
+			error.setText("Fecha no válida");
 		}
 		return l;
 	}
