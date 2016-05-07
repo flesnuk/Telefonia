@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 import clientes.Cliente;
 import clientes.FabricaClientes;
 import excepciones.FechaInvalidaException;
-import tarifas.Tarifa;
 
 public class FormularioCliente extends JPanel{
 	
@@ -36,11 +35,11 @@ public class FormularioCliente extends JPanel{
 	private JTextField JTpoblacion;
 	private JTextField JTemail;
 	private JFecha fechaAlta;
-	private JTextField tarifa;
 	private Escuchador escuchador;
 	private FabricaClientes fabC;
 	private JButton anyadir;
 	private JLabel errorFormato;
+	private FormularioTarifa fTar;
 
 	public FormularioCliente(Ventana vista){
 		this.vista=vista;
@@ -67,8 +66,7 @@ public class FormularioCliente extends JPanel{
 		pan3.add(new JLabel("email"), null);
 		pan3.add(JTemail, null);
 		pan3.add(fechaAlta, null);
-		pan3.add(new JLabel("tarifa"), null);
-		pan3.add(tarifa, null);
+		pan3.add(new FormularioTarifa(), null);
 		pan3.add(anyadir, null);
 		pan3.add(errorFormato, null);
 		super.add(pan1, null);
@@ -93,11 +91,11 @@ public class FormularioCliente extends JPanel{
 		JTpoblacion = new JTextField(12);
 		JTemail = new JTextField(20);
 		fechaAlta = new JFecha();
-		tarifa = new JTextField(4);
 		anyadir = new JButton("Add");
 		errorFormato = new JLabel("                                    ");
 		anyadir.addActionListener(escuchador);
 		fabC = new FabricaClientes();
+		fTar = new FormularioTarifa();
 	}
 	
 	public Cliente getCliente(){		
@@ -112,7 +110,7 @@ public class FormularioCliente extends JPanel{
 						JTpoblacion.getText(), 
 						JTemail.getText(),
 						fechaAlta.getFecha(), 
-						new Tarifa(Double.parseDouble(tarifa.getText())));
+						fTar.getTarifa());
 			} catch (NumberFormatException e) {
 				errorFormato.setText("Número no válido");
 			} catch (FechaInvalidaException e) {
@@ -129,7 +127,7 @@ public class FormularioCliente extends JPanel{
 						JTpoblacion.getText(), 
 						JTemail.getText(),
 						fechaAlta.getFecha(), 
-						new Tarifa(Double.parseDouble(tarifa.getText())));
+						fTar.getTarifa());
 			} catch (NumberFormatException e) {
 				errorFormato.setText("Número no válido");
 			} catch (FechaInvalidaException e) {
