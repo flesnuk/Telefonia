@@ -38,7 +38,7 @@ public class VentanaLlamadas extends JPanel{
 	private Controlador controlador;
 	private Escuchador escuchador;
 	private JLabel error;
-	private JFecha fecha;
+	private JFechaConHora fecha;
 
 	public VentanaLlamadas(Ventana v){
 		modelo = v.getModelo();
@@ -47,7 +47,7 @@ public class VentanaLlamadas extends JPanel{
 		super.setLayout(new BorderLayout());
 		error = new JLabel("                                    ");
 		error.setForeground(Color.RED);
-		fecha = new JFecha();
+		fecha = new JFechaConHora();
 		arriba = new  JPanel();
 		JTLlamada = new JTextField(10);
 		JTDuracion = new JTextField(10);	

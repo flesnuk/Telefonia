@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Component;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -34,6 +35,14 @@ public class JFecha extends JPanel {
 		super.add(anyo, null);
 	}
 	
+	public void setTextoFecha(String texto){
+		txtFecha.setText(texto);
+	}
+	
+	public void addComponent(Component c){
+		super.add(c, null);
+	}
+		
 	public Calendar getFecha() throws FechaInvalidaException{
 		Calendar cal = new GregorianCalendar(Integer.parseInt(anyo.getText()),
 				Integer.parseInt(mes.getText())-1,
@@ -47,5 +56,17 @@ public class JFecha extends JPanel {
 		}
 		return cal;
 	}
+
+	public JTextField getDia() {
+		return dia;
+	}
+
+	public JTextField getMes() {
+		return mes;
+	}
+
+	public JTextField getAnyo() {
+		return anyo;
+	}	
 	
 }
