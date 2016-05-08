@@ -34,6 +34,7 @@ public class Ventana {
 	private Escuchador escuchador;
 	private FormularioCliente arriba;
 	private VentanaLlamadas abajo;
+	private VentanaFacturas facturas;
 	private JFrame frame;
 	
 	public Ventana(){
@@ -62,7 +63,7 @@ public class Ventana {
 	
 	public void GUI(){
 		frame = new JFrame();
-		frame.setLayout(new GridLayout(3,1));
+		frame.setLayout(new GridLayout(4,1));
 		arriba = new FormularioCliente(this);		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inicializarTablaClientes();
@@ -83,6 +84,11 @@ public class Ventana {
 		abajo.setVisible(false);
 		
 		frame.getContentPane().add(abajo, BorderLayout.SOUTH);
+		
+		facturas = new VentanaFacturas(this);
+		facturas.setVisible(false);
+		
+		frame.getContentPane().add(facturas, BorderLayout.SOUTH);
 		frame.pack();
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
@@ -126,12 +132,14 @@ public class Ventana {
 				if(i>=0){		
 					//filtramos los eventos que no devuelvan -1
 					abajo.setVisible(true);
+					facturas.setVisible(true);
 					Cliente aux = modelo.getCliente((String)tablaClientes.getValueAt(i, 0));
 					modelo.selectCliente(aux); 
 				}				 	
 			 }
 			 try {
 					abajo.nuevaLlamada();
+					facturas.nuevaFactura();
 			 } catch (ClienteNoSeleccionadoException e1) { }
 		}
     }
@@ -164,8 +172,12 @@ public class Ventana {
 		abajo.nuevaLlamada();
 	}
 	
+	public void nuevaFactura() throws ClienteNoSeleccionadoException{
+		facturas.nuevaFactura();
+	}
+	
 	public Llamada getLlamada(){
 		return abajo.getLlamada();
-	}
+	}	
 	
 }

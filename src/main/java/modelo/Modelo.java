@@ -1,10 +1,13 @@
 package modelo;
 
+import java.util.Calendar;
 import java.util.Collection;
 
 import llamadas.Llamada;
 import clientes.Cliente;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.OrdenFechasException;
+import facturas.Factura;
 import principal.Gestor;
 import view.Ventana;
 
@@ -45,6 +48,15 @@ public class Modelo {
 	
 	public Collection<Cliente> getClientes(){
 		return g.clientes();
+	}
+	
+	public Collection<Factura> getFacturas() throws ClienteNoSeleccionadoException{
+		return g.facturas();
+	}
+	
+	public void emite(Calendar fecha, Calendar ini, Calendar fin) throws OrdenFechasException, ClienteNoSeleccionadoException{
+		g.emitir(fecha, ini, fin);
+		vista.nuevaFactura();
 	}
 	
 	

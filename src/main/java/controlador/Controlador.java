@@ -31,8 +31,8 @@ public class Controlador {
 		Llamada l = null;
 		l = vista.getLlamada();
 		if (l!=null)
-			modelo.anyadeLlamada(l); 	
-		
-		
+			modelo.anyadeLlamada(l); 			
 	}
+	
+	
 }
