@@ -66,12 +66,13 @@ public class FormularioCliente extends JPanel{
 		pan3.add(new JLabel("email"), null);
 		pan3.add(JTemail, null);
 		pan3.add(fechaAlta, null);
-		pan3.add(new FormularioTarifa(), null);
+		pan3.add(fTar, null);
 		pan3.add(anyadir, null);
 		pan3.add(errorFormato, null);
 		super.add(pan1, null);
 		super.add(pan2, null);
 		super.add(pan3, null);
+		super.revalidate();
 	}
 	
 	public void inicializaVariables(){	

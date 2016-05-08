@@ -26,13 +26,17 @@ public class FormularioTarifa extends JPanel{
 	private JTextField tar_avanzFranja;
 	private JTextField tar_simple;
 	private JComboBox<String> cb;
+	private CardLayout cl;
 	
 	public FormularioTarifa(){			
 		
-		JPanel formularioTarifaSimple = getFormularioTarifaSimple();	
+		JPanel formularioTarifaSimple = new JPanel();
+		tar_simple = new JTextField(7);
+		formularioTarifaSimple.add(tar_simple);
 		JPanel formularioTarifaAvanzada = getFormularioTarifaAvanzada();
 
-		tarifas = new JPanel(new CardLayout());
+		cl = new CardLayout();
+		tarifas = new JPanel(cl);
 		tarifas.add(formularioTarifaSimple, TAR_SIMPLE);
 		tarifas.add(formularioTarifaAvanzada, TAR_AVANZADA);
 		
@@ -42,15 +46,14 @@ public class FormularioTarifa extends JPanel{
 		cb.setEditable(false);
 		cb.addItemListener(new Escuchador());
 		seleccionarTar.add(cb);
-		
-		this.add(seleccionarTar, BorderLayout.PAGE_START);
-		this.add(tarifas, BorderLayout.CENTER);		
+			
+		super.add(seleccionarTar, null);
+		super.add(tarifas, BorderLayout.CENTER);		
 	}
 	
 	
 	class Escuchador implements ItemListener {
         public void itemStateChanged(ItemEvent evt) {
-        	CardLayout cl = (CardLayout)(tarifas.getLayout());
             cl.show(tarifas, (String)evt.getItem());
         }
         

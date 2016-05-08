@@ -84,7 +84,7 @@ public class Ventana {
 		
 		frame.getContentPane().add(abajo, BorderLayout.SOUTH);
 		frame.pack();
-		frame.setLocationRelativeTo(null);
+		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
 	}
 	
