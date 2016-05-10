@@ -112,7 +112,9 @@ public class Gestor implements Serializable{
 		gl.add(actual, l);
 	}
 
-	public Cliente getActual() {
+	public Cliente getActual() throws ClienteNoSeleccionadoException {
+		if (actual==null)
+			throw new ClienteNoSeleccionadoException();
 		return actual;
 	}
 	

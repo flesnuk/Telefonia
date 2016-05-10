@@ -16,6 +16,7 @@ import principal.Gestor;
 import tarifas.Tarifa;
 import clientes.Cliente;
 import clientes.Persona;
+import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 
@@ -34,7 +35,7 @@ public class ListarEntreTest {
     }
 	
 	@Test
-	public void testListarClientesEntre() {
+	public void testListarClientesEntre() throws ClienteYaExisteException {
 		g.add(a);
 		g.add(b);
 		g.add(c);

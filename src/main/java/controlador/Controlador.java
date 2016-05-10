@@ -35,5 +35,10 @@ public class Controlador {
 			modelo.anyadeLlamada(l); 			
 	}
 	
+	public void cambiarTarifa() throws ClienteNoSeleccionadoException{
+		modelo.cambiarTarifa(vista.getNuevaTarifa());
+		
+	}
+	
 	
 }

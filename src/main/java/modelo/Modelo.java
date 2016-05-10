@@ -10,6 +10,7 @@ import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 import principal.Gestor;
+import tarifas.Tarifa;
 import view.Ventana;
 
 public class Modelo {
@@ -58,6 +59,10 @@ public class Modelo {
 	public void emite(Calendar fecha, Calendar ini, Calendar fin) throws OrdenFechasException, ClienteNoSeleccionadoException{
 		g.emitir(fecha, ini, fin);
 		vista.nuevaFactura();
+	}
+
+	public void cambiarTarifa(Tarifa nuevaTarifa) throws ClienteNoSeleccionadoException {
+		g.getActual().setTarifa(nuevaTarifa);		
 	}
 	
 	

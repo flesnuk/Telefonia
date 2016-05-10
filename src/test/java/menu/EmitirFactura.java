@@ -14,6 +14,7 @@ import principal.Gestor;
 import clientes.Cliente;
 import clientes.Persona;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 import tarifas.Tarifa;
@@ -26,7 +27,12 @@ public class EmitirFactura {
 	public void init() {
 		g = new Gestor();
 		c = new Persona("463737","Juan",Calendar.getInstance(),new Tarifa(1));
-		g.add(c);
+		try {
+			g.add(c);
+		} catch (ClienteYaExisteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test

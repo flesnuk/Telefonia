@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import tarifas.Tarifa;
 import controlador.Controlador;
 import clientes.Cliente;
 import excepciones.ClienteNoSeleccionadoException;
@@ -37,6 +38,7 @@ public class Ventana {
 	private VentanaFacturas facturas;
 	private JFrame frame;
 	private JButton arriba;
+	private AccionesCliente botonesCliente;
 	
 	public Ventana(){
 		
@@ -71,19 +73,15 @@ public class Ventana {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inicializarTablaClientes();
 		escuchador = new Escuchador();
-		JButton boton = new JButton("Add");
-		boton.addActionListener(escuchador);	
 		tabla = new JTable(tablaClientes);
 		tablaCli = new JScrollPane(tabla);
-		tablaCli.setPreferredSize(new Dimension(200, 100));
-		
-		JButton boton2 = new JButton("Deselect");
-		boton2.addActionListener(escuchador);
+		tablaCli.setPreferredSize(new Dimension(200, 100));		
 		tabla.getSelectionModel().addListSelectionListener(escuchador);
 		
 		arriba = new JButton("Add");
 		arriba.addActionListener(escuchador);
-		frame.getContentPane().add(arriba, BorderLayout.NORTH);
+		botonesCliente = new AccionesCliente(this);		
+		frame.getContentPane().add(botonesCliente, BorderLayout.NORTH);
 		frame.getContentPane().add(tablaCli, BorderLayout.CENTER);	
 		
 		abajo = new VentanaLlamadas(this);
@@ -152,7 +150,11 @@ public class Ventana {
     }
 	
 	public Cliente getPersona(){		
-		return formCliente.getCliente();
+		return botonesCliente.getFormularioCliente().getCliente();
+	}
+	
+	public Tarifa getNuevaTarifa(){
+		return botonesCliente.getVentanaCambioTarifa().getNuevaTarifa();
 	}
 	
 	

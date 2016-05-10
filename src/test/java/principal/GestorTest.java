@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import tarifas.Tarifa;
 import es.uji.www.*;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 import clientes.Cliente;
@@ -66,7 +67,7 @@ public class GestorTest {
 	
 	
 	@Test
-	public void testAdd() {
+	public void testAdd() throws ClienteYaExisteException {
 		
 		g.add(c1);
 		g.add(c2);
@@ -107,7 +108,7 @@ public class GestorTest {
 	}
 
 	@Test
-	public void testClientes() {
+	public void testClientes() throws ClienteYaExisteException {
 		g.add(c1);
 		g.add(c2);
 		g.add(c3);		
