@@ -9,15 +9,17 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import clientes.Cliente;
 import clientes.FabricaClientes;
+import excepciones.ClienteYaExisteException;
 import excepciones.FechaInvalidaException;
 
-public class FormularioCliente extends JPanel{
+public class FormularioCliente extends JFrame{
 	
 	private static final long serialVersionUID = 4365585455888758995L;
 	private Ventana vista;
@@ -72,7 +74,9 @@ public class FormularioCliente extends JPanel{
 		super.add(pan1, null);
 		super.add(pan2, null);
 		super.add(pan3, null);
-		super.revalidate();
+		super.pack();
+		super.setLocationByPlatform(true);
+		super.setVisible(true);
 	}
 	
 	public void inicializaVariables(){	
@@ -144,7 +148,11 @@ public class FormularioCliente extends JPanel{
           String texto = boton.getText();
             if(texto.equals("Add")){
             	errorFormato.setText("                                    ");
-            	vista.getControlador().anyadePersona();
+            	try {
+					vista.getControlador().anyadePersona();
+				} catch (ClienteYaExisteException e1) {
+					errorFormato.setText("Ya existe");
+				}
             }
       
         }

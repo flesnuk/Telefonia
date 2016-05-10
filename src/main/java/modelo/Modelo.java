@@ -6,6 +6,7 @@ import java.util.Collection;
 import llamadas.Llamada;
 import clientes.Cliente;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 import principal.Gestor;
@@ -23,8 +24,8 @@ public class Modelo {
         this.vista = vista;
     }
 	
-	public void anyadePersona(Cliente p){
-		g.add(p);
+	public void anyadePersona(Cliente p) throws ClienteYaExisteException{
+		g.add(p);		
 		vista.nuevaEntrada();
 	}
 	

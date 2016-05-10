@@ -13,6 +13,7 @@ import tarifas.Tarifa;
 import utilidades.CollectionToString;
 import clientes.Cliente;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 import llamadas.Llamada;
@@ -36,7 +37,12 @@ public class Core {
 	}
 	
 	public static void add(Cliente c){
-		g.add(c);
+		try {
+			g.add(c);
+		} catch (ClienteYaExisteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void remove(String NIF){

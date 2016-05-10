@@ -32,10 +32,11 @@ public class Ventana {
 	private JTable tabla;
 	private JScrollPane tablaCli; 
 	private Escuchador escuchador;
-	private FormularioCliente arriba;
+	private FormularioCliente formCliente;
 	private VentanaLlamadas abajo;
 	private VentanaFacturas facturas;
 	private JFrame frame;
+	private JButton arriba;
 	
 	public Ventana(){
 		
@@ -64,7 +65,9 @@ public class Ventana {
 	public void GUI(){
 		frame = new JFrame();
 		frame.setLayout(new GridLayout(4,1));
-		arriba = new FormularioCliente(this);		
+		formCliente = new FormularioCliente(this);
+		formCliente.setVisible(false);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inicializarTablaClientes();
 		escuchador = new Escuchador();
@@ -77,6 +80,9 @@ public class Ventana {
 		JButton boton2 = new JButton("Deselect");
 		boton2.addActionListener(escuchador);
 		tabla.getSelectionModel().addListSelectionListener(escuchador);
+		
+		arriba = new JButton("Add");
+		arriba.addActionListener(escuchador);
 		frame.getContentPane().add(arriba, BorderLayout.NORTH);
 		frame.getContentPane().add(tablaCli, BorderLayout.CENTER);	
 		
@@ -115,7 +121,8 @@ public class Ventana {
           JButton boton = (JButton)e.getSource();
           String texto = boton.getText();
             if(texto.equals("Add")){
-                controlador.anyadePersona();
+                //controlador.anyadePersona();
+                formCliente.setVisible(true);
             }
             else {   
             	tabla.clearSelection();
@@ -145,7 +152,7 @@ public class Ventana {
     }
 	
 	public Cliente getPersona(){		
-		return arriba.getCliente();
+		return formCliente.getCliente();
 	}
 	
 	

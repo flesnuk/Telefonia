@@ -5,6 +5,7 @@ import modelo.Modelo;
 import view.Ventana;
 import clientes.Cliente;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.ClienteYaExisteException;
 import excepciones.FechaInvalidaException;
 
 public class Controlador {
@@ -20,7 +21,7 @@ public class Controlador {
         this.vista = vista;
     }
 	
-	public void anyadePersona() {			
+	public void anyadePersona() throws ClienteYaExisteException {			
 	    Cliente p = null;
 	    p = vista.getPersona();
 	    if (p!=null)

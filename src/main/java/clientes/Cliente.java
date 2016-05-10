@@ -8,7 +8,7 @@ import tarifas.Tarifa;
 import utilidades.FechaToString;
 
 
-public abstract class Cliente implements TieneFecha, Serializable{
+public abstract class Cliente implements TieneFecha, Serializable, Comparable<Cliente>{
 	/**
 	 * 
 	 */
@@ -96,7 +96,36 @@ public abstract class Cliente implements TieneFecha, Serializable{
 		this.precio = precio;
 	}
 	
+	@Override
+	public int compareTo(Cliente otro) {
+	    return this.NIF.compareTo(otro.NIF);
+	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((NIF == null) ? 0 : NIF.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (NIF == null) {
+			if (other.NIF != null)
+				return false;
+		} else if (!NIF.equals(other.NIF))
+			return false;
+		return true;
+	}
+
 	
 	@Override
 	public String toString() {

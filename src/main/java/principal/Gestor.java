@@ -41,8 +41,8 @@ public class Gestor implements Serializable{
 		return ret;
 	}
 	
-	public void add(Cliente c){		
-		gc.add(c);
+	public void add(Cliente c) throws ClienteYaExisteException{		
+		gc.add(c);		
 	}
 	
 	public Factura emitir(Calendar fecha,Calendar ini,Calendar fin) throws OrdenFechasException{

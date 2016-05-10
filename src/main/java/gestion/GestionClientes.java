@@ -1,13 +1,14 @@
 package gestion;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
 import tarifas.Tarifa;
 import clientes.Cliente;
+import excepciones.ClienteYaExisteException;
 
 public class GestionClientes implements Serializable{
 	/**
@@ -23,10 +24,12 @@ public class GestionClientes implements Serializable{
 	
 	public GestionClientes() {
 		super();
-		this.clientes = new ArrayList<Cliente>();
+		this.clientes = new TreeSet<Cliente>();
 	}
 
-	public boolean add(Cliente cl){
+	public boolean add(Cliente cl) throws ClienteYaExisteException{	
+		if(clientes.contains(cl))
+			throw new ClienteYaExisteException();
 		return clientes.add(cl);
 	}
 	
