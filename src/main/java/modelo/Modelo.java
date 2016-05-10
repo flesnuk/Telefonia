@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import llamadas.Llamada;
 import clientes.Cliente;
+import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
@@ -30,7 +31,7 @@ public class Modelo {
 		vista.nuevaEntrada();
 	}
 	
-	public Cliente getCliente(String NIF){
+	public Cliente getCliente(String NIF) throws ClienteNoEncontradoException{
 		return g.cliente(NIF);
 	}
 	
@@ -63,6 +64,11 @@ public class Modelo {
 
 	public void cambiarTarifa(Tarifa nuevaTarifa) throws ClienteNoSeleccionadoException {
 		g.getActual().setTarifa(nuevaTarifa);		
+	}
+
+	public void borrarCliente() throws ClienteNoEncontradoException, ClienteNoSeleccionadoException {
+		g.remove(g.getActual().getNIF());	
+		vista.nuevaEntrada();
 	}
 	
 	

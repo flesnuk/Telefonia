@@ -4,6 +4,7 @@ import llamadas.Llamada;
 import modelo.Modelo;
 import view.Ventana;
 import clientes.Cliente;
+import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
 import excepciones.FechaInvalidaException;
@@ -38,6 +39,14 @@ public class Controlador {
 	public void cambiarTarifa() throws ClienteNoSeleccionadoException{
 		modelo.cambiarTarifa(vista.getNuevaTarifa());
 		
+	}
+
+	public Cliente buscarCliente() throws ClienteNoEncontradoException {
+		return modelo.getCliente(vista.getNIF());
+	}
+
+	public void borrarCliente() throws ClienteNoEncontradoException, ClienteNoSeleccionadoException {
+		modelo.borrarCliente();
 	}
 	
 	

@@ -13,6 +13,7 @@ import org.junit.Test;
 import principal.Gestor;
 import clientes.Cliente;
 import clientes.Persona;
+import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
@@ -36,7 +37,7 @@ public class EmitirFactura {
 	}
 	
 	@Test
-	public void testEmitir() throws OrdenFechasException, ClienteNoSeleccionadoException {
+	public void testEmitir() throws OrdenFechasException, ClienteNoSeleccionadoException, ClienteNoEncontradoException {
 		g.select(g.cliente("463737"));
 		g.addLlamada(new Llamada(new GregorianCalendar(2015,5,15), 4));
 		g.addLlamada(new Llamada(new GregorianCalendar(2010,5,15), 3));

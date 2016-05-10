@@ -8,57 +8,60 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
-import excepciones.ClienteNoSeleccionadoException;
-import tarifas.Tarifa;
+import excepciones.ClienteNoEncontradoException;
 
-public class VentanaCambioTarifa extends JFrame{
+public class VentanaBuscarCliente extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
-	private FormularioTarifa fTar;
-	private JButton cambiar;
+	private JTextField JTNIF;
+	private JButton buscar;
 	private Ventana vista;
 	private JLabel error;
+	private VentanaInfoCliente info;
 	
-	public VentanaCambioTarifa(Ventana vista){		
+	public VentanaBuscarCliente(Ventana vista){		
 		init();
 		this.vista=vista;
 		super.setVisible(false);
 		super.setLayout(new FlowLayout());
-		super.getContentPane().add(fTar);
-		super.getContentPane().add(cambiar);
+		super.getContentPane().add(new JLabel("NIF:"));
+		super.getContentPane().add(JTNIF);
+		super.getContentPane().add(buscar);
 		super.getContentPane().add(error);
 		super.setLocationByPlatform(true);
 		super.pack();
 	}
 	
 	public void init(){
-		fTar = new FormularioTarifa();
-		cambiar = new JButton("Cambiar");
-		cambiar.addActionListener(new Escuchador());
+		JTNIF = new JTextField(10);
+		buscar = new JButton("Buscar");
+		buscar.addActionListener(new Escuchador());
 		error = new JLabel("                            ");
 		error.setForeground(Color.RED);
+		info = new VentanaInfoCliente();
 	}
 	
 	class Escuchador implements ActionListener {
         public void actionPerformed(ActionEvent e) {
           JButton boton = (JButton)e.getSource();
           String texto = boton.getText();
-            if(texto.equals("Cambiar")){
+            if(texto.equals("Buscar")){
             	error.setText("                         ");
             	try {
-					vista.getControlador().cambiarTarifa();
-				} catch (ClienteNoSeleccionadoException e1) {
-					error.setText("NoSelect");
-				} catch (NumberFormatException e1) {
-					error.setText("Número no válido");
+					info.setCliente(vista.getControlador().buscarCliente());
+					info.pack();
+					info.setVisible(true);
+				} catch (ClienteNoEncontradoException e1) {
+					error.setText("NoEncontrado");
 				}
             }      
         }
 	}
 	
-	public Tarifa getNuevaTarifa(){
-		return fTar.getTarifa();
+	public String getNIF(){
+		return JTNIF.getText();
 	}
 	
 }

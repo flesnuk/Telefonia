@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import tarifas.Tarifa;
 import controlador.Controlador;
 import clientes.Cliente;
+import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import llamadas.Llamada;
 import modelo.Modelo;
@@ -138,7 +139,10 @@ public class Ventana {
 					//filtramos los eventos que no devuelvan -1
 					abajo.setVisible(true);
 					facturas.setVisible(true);
-					Cliente aux = modelo.getCliente((String)tablaClientes.getValueAt(i, 0));
+					Cliente aux = null;
+					try {
+						aux = modelo.getCliente((String)tablaClientes.getValueAt(i, 0));
+					} catch (ClienteNoEncontradoException e1) {	}
 					modelo.selectCliente(aux); 
 				}				 	
 			 }
@@ -155,6 +159,10 @@ public class Ventana {
 	
 	public Tarifa getNuevaTarifa(){
 		return botonesCliente.getVentanaCambioTarifa().getNuevaTarifa();
+	}
+	
+	public String getNIF() {
+		return botonesCliente.getVentanaBuscarCliente().getNIF();
 	}
 	
 	
@@ -188,5 +196,13 @@ public class Ventana {
 	public Llamada getLlamada(){
 		return abajo.getLlamada();
 	}	
+	
+	public void clearSelection(){
+		tabla.clearSelection();
+		modelo.selectCliente(null);
+		abajo.setVisible(false);
+		facturas.setVisible(false);
+	}
+	
 	
 }
