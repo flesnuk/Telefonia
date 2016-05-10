@@ -12,6 +12,7 @@ import principal.Gestor;
 import tarifas.Tarifa;
 import utilidades.CollectionToString;
 import clientes.Cliente;
+import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
@@ -46,15 +47,31 @@ public class Core {
 	}
 	
 	public static void remove(String NIF){
-		g.remove(NIF);
+		try {
+			g.remove(NIF);
+		} catch (ClienteNoEncontradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void cambiar(String NIF, double nueva){
-		g.cambiar(NIF, new Tarifa(nueva));
+		try {
+			g.cambiar(NIF, new Tarifa(nueva));
+		} catch (ClienteNoEncontradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static Cliente cliente(String NIF){
-		return g.cliente(NIF);
+		try {
+			return g.cliente(NIF);
+		} catch (ClienteNoEncontradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static Factura factura(int n){
@@ -66,7 +83,12 @@ public class Core {
 	}
 	
 	public static void select(String NIF){
-		g.select(g.cliente(NIF));
+		try {
+			g.select(g.cliente(NIF));
+		} catch (ClienteNoEncontradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void addLlamada(Llamada l){

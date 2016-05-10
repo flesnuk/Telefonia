@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.NoSuchElementException;
 
 import tarifas.Tarifa;
 import excepciones.*;
@@ -63,20 +62,19 @@ public class Gestor implements Serializable{
 		return filtrar(gc.getClientes(),ini,fin);	
 	}
 	
-	public void remove(String NIF){
+	public void remove(String NIF) throws ClienteNoEncontradoException{
 		Cliente c = gc.getCliente(NIF);
 		gc.remove(c);
 		gf.getFacturas().remove(c);
 		gl.getLlamadas().remove(c);
+		actual=null;
 	}
 	
-	public void cambiar(String NIF, Tarifa nueva){
+	public void cambiar(String NIF, Tarifa nueva) throws ClienteNoEncontradoException{
 		gc.getCliente(NIF).setTarifa(nueva);		
 	}
 	
-	public Cliente cliente(String NIF){
-		if(gc.getCliente(NIF)==null)
-			throw new NoSuchElementException();		
+	public Cliente cliente(String NIF) throws ClienteNoEncontradoException{
 		return gc.getCliente(NIF);		
 	}
 	

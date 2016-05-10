@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 
 import tarifas.Tarifa;
 import es.uji.www.*;
+import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
 import excepciones.OrdenFechasException;
@@ -77,7 +78,7 @@ public class GestorTest {
 	}
 
 	@Test
-	public void testRemove() {
+	public void testRemove() throws ClienteNoEncontradoException {
 		g.remove("1111X");
 		cs.remove(c1);
 		if (! cs.containsAll(g.clientes()))
@@ -85,7 +86,7 @@ public class GestorTest {
 	}
 
 	@Test
-	public void testCambiar() {
+	public void testCambiar() throws ClienteNoEncontradoException {
 		c2.setTarifa(new Tarifa(3));
 		g.cambiar("2222D", new Tarifa(3));
 		if (! cs.containsAll(g.clientes()))
@@ -93,7 +94,7 @@ public class GestorTest {
 	}
 
 	@Test
-	public void testCliente() {
+	public void testCliente() throws ClienteNoEncontradoException {
 		assertEquals(g.cliente("2222D").toString(),c2.toString());
 	}
 
@@ -135,7 +136,7 @@ public class GestorTest {
 	}
 
 	@Test
-	public void testSelect() {
+	public void testSelect() throws ClienteNoSeleccionadoException {
 		g.select(c3);
 		assertEquals(c3, g.getActual());	
 	}

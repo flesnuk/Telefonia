@@ -3,11 +3,11 @@ package gestion;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
 import tarifas.Tarifa;
 import clientes.Cliente;
+import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteYaExisteException;
 
 public class GestionClientes implements Serializable{
@@ -41,7 +41,7 @@ public class GestionClientes implements Serializable{
 		cl.setTarifa(new Tarifa(nueva));
 	}
 	
-	public Cliente getCliente(String NIF) {
+	public Cliente getCliente(String NIF) throws ClienteNoEncontradoException {
 		Cliente ret;
 		Iterator<Cliente> i = clientes.iterator();
 		while(i.hasNext()){
@@ -49,7 +49,7 @@ public class GestionClientes implements Serializable{
 			if(ret.getNIF().equals(NIF))
 				return ret;
 		} 
-		throw new NoSuchElementException();
+		throw new ClienteNoEncontradoException();
 	}
 	
 	public String toString() {
