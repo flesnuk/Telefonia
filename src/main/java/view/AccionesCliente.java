@@ -19,9 +19,11 @@ public class AccionesCliente extends JPanel{
 	private JButton borrar;
 	private JButton buscarNIF;
 	private JButton cambiarTarifa;
+	private JButton JBfiltrar;
 	private FormularioCliente formCliente;
 	private VentanaCambioTarifa formTarifa;	
 	private VentanaBuscarCliente buscarCliente;
+	private VentanaFiltrar filtrar;
 	
 	public AccionesCliente(Ventana vista){
 		this.vista=vista;
@@ -30,7 +32,8 @@ public class AccionesCliente extends JPanel{
 		super.add(anyade);
 		super.add(borrar);
 		super.add(buscarNIF);
-		super.add(cambiarTarifa);		
+		super.add(cambiarTarifa);	
+		super.add(JBfiltrar);	
 	}
 	
 	
@@ -41,16 +44,20 @@ public class AccionesCliente extends JPanel{
 		borrar = new JButton("Borrar cliente");
 		buscarNIF = new JButton("Buscar cliente...");
 		cambiarTarifa = new JButton("Cambiar tarifa...");
+		JBfiltrar = new JButton("Filtrar...");
 		deseleccionar.addActionListener(escuchador);
 		anyade.addActionListener(escuchador);
 		borrar.addActionListener(escuchador);
 		buscarNIF.addActionListener(escuchador);
 		cambiarTarifa.addActionListener(escuchador);
+		JBfiltrar.addActionListener(escuchador);
 		formCliente = new FormularioCliente(vista);
 		formCliente.setVisible(false);
 		formTarifa = new VentanaCambioTarifa(vista);
 		buscarCliente = new VentanaBuscarCliente(vista);
 		buscarCliente.setVisible(false);
+		filtrar = new VentanaFiltrar();
+		filtrar.setVisible(false);
 	}
 	
 	class Escuchador implements ActionListener {
@@ -71,6 +78,8 @@ public class AccionesCliente extends JPanel{
             	buscarCliente.setVisible(true);
             } else if(texto.equals("Cambiar tarifa...")){
             	formTarifa.setVisible(true);
+            } else if(texto.equals("Filtrar...")){
+            	filtrar.setVisible(true);
             } else {
             	vista.clearSelection();
             }
