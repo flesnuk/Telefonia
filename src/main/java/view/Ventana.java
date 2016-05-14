@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.Collection;
 
 import javax.swing.JButton;
@@ -69,15 +72,15 @@ public class Ventana {
 		frame = new JFrame();
 		frame.setLayout(new GridLayout(4,1));
 		formCliente = new FormularioCliente(this);
-		formCliente.setVisible(false);
+		formCliente.setVisible(false);		
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inicializarTablaClientes();
 		escuchador = new Escuchador();
 		tabla = new JTable(tablaClientes);
 		tablaCli = new JScrollPane(tabla);
 		tablaCli.setPreferredSize(new Dimension(200, 100));		
 		tabla.getSelectionModel().addListSelectionListener(escuchador);
+		nuevaEntrada();
 		
 		arriba = new JButton("Add");
 		arriba.addActionListener(escuchador);
@@ -97,6 +100,20 @@ public class Ventana {
 		frame.pack();
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter()
+		{
+			@Override
+		    public void windowClosing(WindowEvent e)
+		    {
+		        try {
+					modelo.escribir();
+					exitProcedure();
+				} catch (IOException e1) {
+					
+				}
+		    }
+		});
 	}
 	
 	public void creaGUI() {
@@ -182,7 +199,7 @@ public class Ventana {
 	public void inicializarTablaClientes(){
 		tablaClientes = new DefaultTableModel();
 		Object[] nombreCol = {"NIF","Nombre"};
-		tablaClientes.setColumnIdentifiers(nombreCol);		
+		tablaClientes.setColumnIdentifiers(nombreCol);			
 	}
 		
 	public void nuevaLlamada() throws ClienteNoSeleccionadoException{
@@ -204,5 +221,10 @@ public class Ventana {
 		facturas.setVisible(false);
 	}
 	
+	public void exitProcedure() {
+	    frame.dispose();
+	    System.exit(0);
+	}
+
 	
 }

@@ -1,7 +1,16 @@
 package modelo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.Collection;
+
+import javax.swing.JFileChooser;
 
 import llamadas.Llamada;
 import clientes.Cliente;
@@ -18,13 +27,43 @@ public class Modelo {
 	private Gestor g ;
 	private Ventana vista;
 	
-	public Modelo(){
-		g = new Gestor();
+	public Modelo() throws ClassNotFoundException, IOException{
+		leer();		
 	}
 	
 	public void setVista(Ventana vista) {
         this.vista = vista;
     }
+	
+	public void escribir() throws IOException{
+		FileOutputStream fos = new FileOutputStream("gestor.bin");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(g);
+		oos.close();
+		
+	}
+	
+	public void leer() throws ClassNotFoundException, IOException{
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream("gestor.bin");
+		} catch (FileNotFoundException e) {
+			System.out.println("Fichero aún no generado");
+			g = new Gestor();
+		}
+		if(fis!=null){
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			g = (Gestor)ois.readObject();
+			ois.close();	
+		}	
+
+	}
+	
+	public File leerArchivo(){
+		JFileChooser file=new JFileChooser();
+		file.showOpenDialog(null);
+		return file.getSelectedFile();		
+	}
 	
 	public void anyadePersona(Cliente p) throws ClienteYaExisteException{
 		g.add(p);		

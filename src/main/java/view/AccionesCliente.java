@@ -20,6 +20,8 @@ public class AccionesCliente extends JPanel{
 	private JButton buscarNIF;
 	private JButton cambiarTarifa;
 	private JButton JBfiltrar;
+	private JButton cargar;
+	private JButton guardar;
 	private FormularioCliente formCliente;
 	private VentanaCambioTarifa formTarifa;	
 	private VentanaBuscarCliente buscarCliente;
@@ -34,6 +36,8 @@ public class AccionesCliente extends JPanel{
 		super.add(buscarNIF);
 		super.add(cambiarTarifa);	
 		super.add(JBfiltrar);	
+		super.add(guardar);	
+		super.add(cargar);	
 	}
 	
 	
@@ -45,18 +49,22 @@ public class AccionesCliente extends JPanel{
 		buscarNIF = new JButton("Buscar cliente...");
 		cambiarTarifa = new JButton("Cambiar tarifa...");
 		JBfiltrar = new JButton("Filtrar...");
+		guardar = new JButton("Guardar");
+		cargar = new JButton("Cargar...");
 		deseleccionar.addActionListener(escuchador);
 		anyade.addActionListener(escuchador);
 		borrar.addActionListener(escuchador);
 		buscarNIF.addActionListener(escuchador);
 		cambiarTarifa.addActionListener(escuchador);
 		JBfiltrar.addActionListener(escuchador);
+		guardar.addActionListener(escuchador);
+		cargar.addActionListener(escuchador);
 		formCliente = new FormularioCliente(vista);
 		formCliente.setVisible(false);
 		formTarifa = new VentanaCambioTarifa(vista);
 		buscarCliente = new VentanaBuscarCliente(vista);
 		buscarCliente.setVisible(false);
-		filtrar = new VentanaFiltrar();
+		filtrar = new VentanaFiltrar(vista);
 		filtrar.setVisible(false);
 	}
 	
@@ -80,6 +88,10 @@ public class AccionesCliente extends JPanel{
             	formTarifa.setVisible(true);
             } else if(texto.equals("Filtrar...")){
             	filtrar.setVisible(true);
+            } else if(texto.equals("Guardar")){
+            	vista.getControlador().escribir();
+            } else if(texto.equals("Cargar...")){
+            	vista.getControlador().cargar();
             } else {
             	vista.clearSelection();
             }

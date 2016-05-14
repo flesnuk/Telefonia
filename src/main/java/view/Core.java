@@ -1,11 +1,13 @@
 package view;
 
+import java.io.IOException;
+
 import modelo.Modelo;
 import controlador.Controlador;
 
 public class Core {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		
 		      	
 	        	Controlador controlador = new Controlador();
@@ -14,12 +16,11 @@ public class Core {
 	        	
 	    		modelo.setVista(vista);
 	            vista.setModelo(modelo);
-	            vista.setControlador(controlador);
+	            vista.setControlador(controlador);	            
 	            controlador.setModelo(modelo);
 	            controlador.setVista(vista);
 	            
 	            vista.creaGUI();
-	         
 	}
 
 }
