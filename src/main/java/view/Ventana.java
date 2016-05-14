@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Collection;
 
 import javax.swing.JButton;
@@ -26,6 +27,7 @@ import controlador.Controlador;
 import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
+import excepciones.FechaInvalidaException;
 import llamadas.Llamada;
 import modelo.Modelo;
 
@@ -180,6 +182,14 @@ public class Ventana {
 	
 	public String getNIF() {
 		return botonesCliente.getVentanaBuscarCliente().getNIF();
+	}
+	
+	public Calendar getFechaInicio() throws FechaInvalidaException {
+	    return botonesCliente.getVentanaFiltrar().getFechaInicio();
+	}
+	
+	public Calendar getFechaFin() throws FechaInvalidaException {
+	    return botonesCliente.getVentanaFiltrar().getFechaFin();
 	}
 	
 	

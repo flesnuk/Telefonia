@@ -110,4 +110,8 @@ public class AccionesCliente extends JPanel{
 		return buscarCliente;
 	}
 	
+	public VentanaFiltrar getVentanaFiltrar(){
+		return filtrar;
+	}
+	
 }

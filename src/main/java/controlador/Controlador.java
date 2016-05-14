@@ -73,5 +73,31 @@ public class Controlador {
 		
 	}
 	
+	public void filtraClientes() throws FechaInvalidaException {
+		modelo.filtraClientes();		
+	}
+
+	public void filtraLlamadas() throws ClienteNoSeleccionadoException, FechaInvalidaException {
+		modelo.filtraLlamadas();
+	}
+
+	public void filtraFacturas() throws ClienteNoSeleccionadoException, FechaInvalidaException {
+		modelo.filtraFacturas();
+	}
+
+	public void deshacerFiltraClientes() {
+		modelo.deshacerFiltraClientes();
+	}
+
+	public void deshacerFiltraLlamadas() throws ClienteNoSeleccionadoException {
+		modelo.deshacerFiltraLlamadas();
+	}
+
+	public void deshacerFiltraFacturas() throws ClienteNoSeleccionadoException {
+		modelo.deshacerFiltraFacturas();
+	}
+
+	
+	
 	
 }

@@ -6,7 +6,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
+import java.util.Calendar;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -14,7 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTabbedPane;
+
+import excepciones.ClienteNoSeleccionadoException;
+import excepciones.FechaInvalidaException;
 
 public class VentanaFiltrar extends JFrame{
 		
@@ -82,9 +84,11 @@ public class VentanaFiltrar extends JFrame{
           JButton boton = (JButton)e.getSource();
           String texto = boton.getText();
             if(texto.equals("Filtrar")){
+            	filtra();
             	((AbstractButton) panel.getComponent(5)).setText("Deshacer"); 
             	refresh();
             } else {
+            	deshacer();
             	((AbstractButton) panel.getComponent(5)).setText("Filtrar"); 
             	refresh();
             }
@@ -118,6 +122,65 @@ public class VentanaFiltrar extends JFrame{
             
         }
         
+	}
+	
+	public void filtra() {
+	    if(selectClientes.isSelected()){
+	    	try {
+				vista.getControlador().filtraClientes();
+			} catch (FechaInvalidaException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    } else if (selectLlamadas.isSelected()){
+	    	try {
+				vista.getControlador().filtraLlamadas();
+			} catch (ClienteNoSeleccionadoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FechaInvalidaException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    } else {
+	    	try {
+				vista.getControlador().filtraFacturas();
+			} catch (ClienteNoSeleccionadoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FechaInvalidaException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+	}
+	
+	public void deshacer() {
+	    if(selectClientes.isSelected()){
+	    	vista.getControlador().deshacerFiltraClientes();
+	    } else if (selectLlamadas.isSelected()){
+	    	try {
+				vista.getControlador().deshacerFiltraLlamadas();
+			} catch (ClienteNoSeleccionadoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    } else {
+	    	try {
+				vista.getControlador().deshacerFiltraFacturas();
+			} catch (ClienteNoSeleccionadoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+	}
+	
+	public Calendar getFechaInicio() throws FechaInvalidaException {
+	    return inicio.getFecha();
+	}
+	
+	public Calendar getFechaFin() throws FechaInvalidaException {
+	    return fin.getFecha();
 	}
 	
 	public void refresh() {

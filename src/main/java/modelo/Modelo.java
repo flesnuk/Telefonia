@@ -17,6 +17,7 @@ import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
+import excepciones.FechaInvalidaException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 import principal.Gestor;
@@ -26,8 +27,14 @@ import view.Ventana;
 public class Modelo {
 	private Gestor g ;
 	private Ventana vista;
+	private Collection<Cliente> clientesFiltrados;
+	private Collection<Llamada> llamadasFiltrados;
+	private Collection<Factura> facturasFiltrados;
 	
 	public Modelo() throws ClassNotFoundException, IOException{
+		clientesFiltrados=null;
+		llamadasFiltrados=null;
+		facturasFiltrados=null;
 		leer();		
 	}
 	
@@ -53,8 +60,9 @@ public class Modelo {
 		}
 		if(fis!=null){
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			g = (Gestor)ois.readObject();
+			g = (Gestor)ois.readObject();			
 			ois.close();	
+			g.select(null);
 		}	
 
 	}
@@ -85,14 +93,20 @@ public class Modelo {
 	}
 	
 	public Collection<Llamada> getLlamadas() throws ClienteNoSeleccionadoException{
+		if(llamadasFiltrados!=null)
+			return llamadasFiltrados;
 		return g.llamadas();
 	}
 	
 	public Collection<Cliente> getClientes(){
+		if(clientesFiltrados!=null)
+			return clientesFiltrados;
 		return g.clientes();
 	}
 	
 	public Collection<Factura> getFacturas() throws ClienteNoSeleccionadoException{
+		if(facturasFiltrados!=null)
+			return facturasFiltrados;
 		return g.facturas();
 	}
 	
@@ -108,6 +122,36 @@ public class Modelo {
 	public void borrarCliente() throws ClienteNoEncontradoException, ClienteNoSeleccionadoException {
 		g.remove(g.getActual().getNIF());	
 		vista.nuevaEntrada();
+	}
+
+	public void filtraClientes() throws FechaInvalidaException {
+		clientesFiltrados=g.listarClientesEntre(vista.getFechaInicio(), vista.getFechaFin());
+		vista.nuevaEntrada();
+	}
+
+	public void filtraLlamadas() throws ClienteNoSeleccionadoException, FechaInvalidaException {
+		llamadasFiltrados=g.listarLlamadasEntre(vista.getFechaInicio(), vista.getFechaFin());	
+		vista.nuevaLlamada();
+	}
+
+	public void filtraFacturas() throws ClienteNoSeleccionadoException, FechaInvalidaException {
+		facturasFiltrados=g.listarFacturasEntre(vista.getFechaInicio(), vista.getFechaFin());
+		vista.nuevaFactura();
+	}
+
+	public void deshacerFiltraClientes() {
+		clientesFiltrados=null;
+		vista.nuevaEntrada();
+	}
+
+	public void deshacerFiltraLlamadas() throws ClienteNoSeleccionadoException {
+		llamadasFiltrados=null;
+		vista.nuevaLlamada();
+	}
+
+	public void deshacerFiltraFacturas() throws ClienteNoSeleccionadoException {
+		facturasFiltrados=null;
+		vista.nuevaFactura();
 	}
 	
 	
