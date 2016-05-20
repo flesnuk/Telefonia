@@ -75,7 +75,7 @@ public class Modelo {
 	
 	public void anyadePersona(Cliente p) throws ClienteYaExisteException{
 		g.add(p);		
-		vista.nuevaEntrada();
+		vista.nuevoCliente();
 	}
 	
 	public Cliente getCliente(String NIF) throws ClienteNoEncontradoException{
@@ -84,6 +84,18 @@ public class Modelo {
 	
 	public void selectCliente(Cliente c){
 		g.select(c);
+		if(llamadasFiltrados!=null)
+			try {
+				filtraLlamadas();
+			} catch (ClienteNoSeleccionadoException | FechaInvalidaException e) {
+				e.printStackTrace();
+			}
+		if(facturasFiltrados!=null)
+			try {
+				filtraFacturas();
+			} catch (ClienteNoSeleccionadoException | FechaInvalidaException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	public void anyadeLlamada(Llamada l) throws ClienteNoSeleccionadoException{
@@ -121,12 +133,12 @@ public class Modelo {
 
 	public void borrarCliente() throws ClienteNoEncontradoException, ClienteNoSeleccionadoException {
 		g.remove(g.getActual().getNIF());	
-		vista.nuevaEntrada();
+		vista.nuevoCliente();
 	}
 
 	public void filtraClientes() throws FechaInvalidaException {
 		clientesFiltrados=g.listarClientesEntre(vista.getFechaInicio(), vista.getFechaFin());
-		vista.nuevaEntrada();
+		vista.nuevoCliente();
 	}
 
 	public void filtraLlamadas() throws ClienteNoSeleccionadoException, FechaInvalidaException {
@@ -141,7 +153,7 @@ public class Modelo {
 
 	public void deshacerFiltraClientes() {
 		clientesFiltrados=null;
-		vista.nuevaEntrada();
+		vista.nuevoCliente();
 	}
 
 	public void deshacerFiltraLlamadas() throws ClienteNoSeleccionadoException {

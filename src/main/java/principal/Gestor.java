@@ -31,6 +31,8 @@ public class Gestor implements Serializable{
 	public static <T extends TieneFecha> Collection<T> filtrar(Collection<T> dat, 
 			Calendar inicio, Calendar fin){
 		Collection<T> ret = new ArrayList<T>();
+		if (dat==null)
+			return ret;
 		for (T e : dat){
 			if(e.getFecha().after(inicio)  &&  e.getFecha().before(fin)){
 				ret.add(e);

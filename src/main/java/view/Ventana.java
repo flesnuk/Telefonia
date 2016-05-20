@@ -82,7 +82,7 @@ public class Ventana {
 		tablaCli = new JScrollPane(tabla);
 		tablaCli.setPreferredSize(new Dimension(200, 100));		
 		tabla.getSelectionModel().addListSelectionListener(escuchador);
-		nuevaEntrada();
+		nuevoCliente();
 		
 		arriba = new JButton("Add");
 		arriba.addActionListener(escuchador);
@@ -193,7 +193,7 @@ public class Ventana {
 	}
 	
 	
-	public void nuevaEntrada(){
+	public void nuevoCliente(){
 		Collection<Cliente> clientes = modelo.getClientes();
 		inicializarTablaClientes();
 		tabla.setModel(tablaClientes);
