@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import llamadas.Llamada;
-import modelo.Modelo;
+import modelo.InterrogaModelo;
 import controlador.Controlador;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.FechaInvalidaException;
@@ -28,7 +28,7 @@ public class VentanaLlamadas extends JPanel{
 	
 	private JPanel pan;
 	
-	private Modelo modelo;
+	private InterrogaModelo modelo;
 	private DefaultTableModel tablaLlamadas;
 	private JTable tabla;
 	private JScrollPane tablaLlam;

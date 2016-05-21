@@ -1,6 +1,5 @@
 package modelo;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,8 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.Collection;
-
-import javax.swing.JFileChooser;
 
 import llamadas.Llamada;
 import clientes.Cliente;
@@ -22,26 +19,27 @@ import excepciones.OrdenFechasException;
 import facturas.Factura;
 import principal.Gestor;
 import tarifas.Tarifa;
-import view.Ventana;
+import view.InformaVista;
 
-public class Modelo {
+public class ImplementacionModelo implements CambioModelo, InterrogaModelo {
 	private Gestor g ;
-	private Ventana vista;
+	private InformaVista vista;
 	private Collection<Cliente> clientesFiltrados;
 	private Collection<Llamada> llamadasFiltrados;
 	private Collection<Factura> facturasFiltrados;
 	
-	public Modelo() throws ClassNotFoundException, IOException{
+	public ImplementacionModelo() throws ClassNotFoundException, IOException{
 		clientesFiltrados=null;
 		llamadasFiltrados=null;
 		facturasFiltrados=null;
 		leer();		
 	}
 	
-	public void setVista(Ventana vista) {
+	public void setVista(InformaVista vista) {
         this.vista = vista;
     }
 	
+	@Override
 	public void escribir() throws IOException{
 		FileOutputStream fos = new FileOutputStream("gestor.bin");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -50,6 +48,7 @@ public class Modelo {
 		
 	}
 	
+	@Override
 	public void leer() throws ClassNotFoundException, IOException{
 		FileInputStream fis = null;
 		try {
@@ -67,21 +66,18 @@ public class Modelo {
 
 	}
 	
-	public File leerArchivo(){
-		JFileChooser file=new JFileChooser();
-		file.showOpenDialog(null);
-		return file.getSelectedFile();		
-	}
-	
+	@Override
 	public void anyadePersona(Cliente p) throws ClienteYaExisteException{
 		g.add(p);		
 		vista.nuevoCliente();
 	}
 	
+	@Override
 	public Cliente getCliente(String NIF) throws ClienteNoEncontradoException{
 		return g.cliente(NIF);
 	}
 	
+	@Override
 	public void selectCliente(Cliente c){
 		g.select(c);
 		if(llamadasFiltrados!=null)
@@ -98,69 +94,82 @@ public class Modelo {
 			}
 	}
 	
+	@Override
 	public void anyadeLlamada(Llamada l) throws ClienteNoSeleccionadoException{
 		if(l!=null)
 			g.addLlamada(l);
 		vista.nuevaLlamada();
 	}
 	
+	@Override
 	public Collection<Llamada> getLlamadas() throws ClienteNoSeleccionadoException{
 		if(llamadasFiltrados!=null)
 			return llamadasFiltrados;
 		return g.llamadas();
 	}
 	
+	@Override
 	public Collection<Cliente> getClientes(){
 		if(clientesFiltrados!=null)
 			return clientesFiltrados;
 		return g.clientes();
 	}
 	
+	@Override
 	public Collection<Factura> getFacturas() throws ClienteNoSeleccionadoException{
 		if(facturasFiltrados!=null)
 			return facturasFiltrados;
 		return g.facturas();
 	}
 	
+	@Override
 	public void emite(Calendar fecha, Calendar ini, Calendar fin) throws OrdenFechasException, ClienteNoSeleccionadoException{
 		g.emitir(fecha, ini, fin);
 		vista.nuevaFactura();
 	}
 
+	@Override
 	public void cambiarTarifa(Tarifa nuevaTarifa) throws ClienteNoSeleccionadoException {
 		g.getActual().setTarifa(nuevaTarifa);		
 	}
 
+	@Override
 	public void borrarCliente() throws ClienteNoEncontradoException, ClienteNoSeleccionadoException {
 		g.remove(g.getActual().getNIF());	
 		vista.nuevoCliente();
 	}
 
+	@Override
 	public void filtraClientes() throws FechaInvalidaException {
 		clientesFiltrados=g.listarClientesEntre(vista.getFechaInicio(), vista.getFechaFin());
 		vista.nuevoCliente();
 	}
 
+	@Override
 	public void filtraLlamadas() throws ClienteNoSeleccionadoException, FechaInvalidaException {
 		llamadasFiltrados=g.listarLlamadasEntre(vista.getFechaInicio(), vista.getFechaFin());	
 		vista.nuevaLlamada();
 	}
 
+	@Override
 	public void filtraFacturas() throws ClienteNoSeleccionadoException, FechaInvalidaException {
 		facturasFiltrados=g.listarFacturasEntre(vista.getFechaInicio(), vista.getFechaFin());
 		vista.nuevaFactura();
 	}
 
+	@Override
 	public void deshacerFiltraClientes() {
 		clientesFiltrados=null;
 		vista.nuevoCliente();
 	}
 
+	@Override
 	public void deshacerFiltraLlamadas() throws ClienteNoSeleccionadoException {
 		llamadasFiltrados=null;
 		vista.nuevaLlamada();
 	}
 
+	@Override
 	public void deshacerFiltraFacturas() throws ClienteNoSeleccionadoException {
 		facturasFiltrados=null;
 		vista.nuevaFactura();

@@ -2,17 +2,17 @@ package view;
 
 import java.io.IOException;
 
-import modelo.Modelo;
-import controlador.Controlador;
+import modelo.ImplementacionModelo;
+import controlador.ImplementacionControlador;
 
 public class Core {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		
 		      	
-	        	Controlador controlador = new Controlador();
+	        	ImplementacionControlador controlador = new ImplementacionControlador();
 	    		Ventana vista = new Ventana();
-	    		Modelo modelo = new Modelo();
+	    		ImplementacionModelo modelo = new ImplementacionModelo();
 	        	
 	    		modelo.setVista(vista);
 	            vista.setModelo(modelo);

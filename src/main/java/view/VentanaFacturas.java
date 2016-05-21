@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.Modelo;
+import modelo.InterrogaModelo;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.FechaInvalidaException;
 import excepciones.OrdenFechasException;
@@ -27,7 +27,7 @@ public class VentanaFacturas extends JPanel{
 	
 	private JPanel pan;
 	
-	private Modelo modelo;
+	private InterrogaModelo modelo;
 	private DefaultTableModel tablaLlamadas;
 	private JTable tabla;
 	private JScrollPane tablaLlam;

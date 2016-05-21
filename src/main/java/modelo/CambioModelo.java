@@ -1,28 +1,30 @@
-package controlador;
+package modelo;
 
+
+import java.io.IOException;
+
+import llamadas.Llamada;
+import tarifas.Tarifa;
 import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
 import excepciones.FechaInvalidaException;
 
-public interface Controlador {
+public interface CambioModelo {
 
-	void anyadePersona() throws ClienteYaExisteException;
 
-	void anyadeLlamada() throws ClienteNoSeleccionadoException,
-			FechaInvalidaException;
+	void anyadePersona(Cliente p) throws ClienteYaExisteException;
+	
+	Cliente getCliente(String NIF) throws ClienteNoEncontradoException;
 
-	void cambiarTarifa() throws ClienteNoSeleccionadoException;
+	void anyadeLlamada(Llamada l) throws ClienteNoSeleccionadoException;
 
-	Cliente buscarCliente() throws ClienteNoEncontradoException;
+	void cambiarTarifa(Tarifa nuevaTarifa)
+			throws ClienteNoSeleccionadoException;
 
 	void borrarCliente() throws ClienteNoEncontradoException,
 			ClienteNoSeleccionadoException;
-
-	void escribir();
-
-	void cargar();
 
 	void filtraClientes() throws FechaInvalidaException;
 
@@ -31,6 +33,10 @@ public interface Controlador {
 
 	void filtraFacturas() throws ClienteNoSeleccionadoException,
 			FechaInvalidaException;
+
+	void escribir() throws IOException;
+
+	void leer() throws ClassNotFoundException, IOException;
 
 	void deshacerFiltraClientes();
 

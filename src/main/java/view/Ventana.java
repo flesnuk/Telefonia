@@ -29,11 +29,11 @@ import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.FechaInvalidaException;
 import llamadas.Llamada;
-import modelo.Modelo;
+import modelo.InterrogaModelo;
 
-public class Ventana {
+public class Ventana implements InformaVista, InterrogaVista {
 	
-	private Modelo modelo;
+	private InterrogaModelo modelo;
 	private Controlador controlador;
 	private DefaultTableModel tablaClientes;
 	private JTable tabla;
@@ -50,7 +50,7 @@ public class Ventana {
 		
 	}
 	
-	public void setModelo(Modelo modelo) {
+	public void setModelo(InterrogaModelo modelo) {
         this.modelo = modelo;
     }
 	
@@ -58,7 +58,7 @@ public class Ventana {
         this.controlador = controlador;
     }
 	
-	public Modelo getModelo() {
+	public InterrogaModelo getModelo() {
         return modelo;
     }
 	
@@ -172,27 +172,33 @@ public class Ventana {
 		}
     }
 	
+	@Override
 	public Cliente getPersona(){		
 		return botonesCliente.getFormularioCliente().getCliente();
 	}
 	
+	@Override
 	public Tarifa getNuevaTarifa(){
 		return botonesCliente.getVentanaCambioTarifa().getNuevaTarifa();
 	}
 	
+	@Override
 	public String getNIF() {
 		return botonesCliente.getVentanaBuscarCliente().getNIF();
 	}
 	
+	@Override
 	public Calendar getFechaInicio() throws FechaInvalidaException {
 	    return botonesCliente.getVentanaFiltrar().getFechaInicio();
 	}
 	
+	@Override
 	public Calendar getFechaFin() throws FechaInvalidaException {
 	    return botonesCliente.getVentanaFiltrar().getFechaFin();
 	}
 	
 	
+	@Override
 	public void nuevoCliente(){
 		Collection<Cliente> clientes = modelo.getClientes();
 		inicializarTablaClientes();
@@ -212,14 +218,17 @@ public class Ventana {
 		tablaClientes.setColumnIdentifiers(nombreCol);			
 	}
 		
+	@Override
 	public void nuevaLlamada() throws ClienteNoSeleccionadoException{
 		abajo.nuevaLlamada();
 	}
 	
+	@Override
 	public void nuevaFactura() throws ClienteNoSeleccionadoException{
 		facturas.nuevaFactura();
 	}
 	
+	@Override
 	public Llamada getLlamada(){
 		return abajo.getLlamada();
 	}	
