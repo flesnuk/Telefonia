@@ -16,6 +16,7 @@ import es.uji.www.*;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
+import excepciones.CodigoFacturaException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 import clientes.Cliente;
@@ -105,7 +106,12 @@ public class GestorTest {
 		g.addLlamada(l2);
 		Factura f =
 				g.emitir(new GregorianCalendar(2005,4,15), new GregorianCalendar(1995,4,15), new GregorianCalendar(2015,4,15));
-		assertEquals(f, g.factura(1));
+		try {
+			assertEquals(f, g.factura(1));
+		} catch (CodigoFacturaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test

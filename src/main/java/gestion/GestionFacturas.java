@@ -1,6 +1,7 @@
 package gestion;
 
 import clientes.Cliente;
+import excepciones.CodigoFacturaException;
 import facturas.*;
 
 import java.io.Serializable;
@@ -48,7 +49,7 @@ public class GestionFacturas implements Serializable{
 		return f;
 	}
 	
-	public Factura getFactura(int nf){
+	public Factura getFactura(int nf) throws CodigoFacturaException{
 		Collection<Collection<Factura>> temp = facturas.values();
 		Collection<Factura> facs;
 		Iterator<Collection<Factura>> i = temp.iterator();
@@ -59,7 +60,7 @@ public class GestionFacturas implements Serializable{
 					return f;
 			}
 		} 
-		return null;
+		throw new CodigoFacturaException();
 	}
 	
 	public Collection<Factura> getFacturas(Cliente c) {

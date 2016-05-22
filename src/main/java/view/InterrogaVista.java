@@ -21,4 +21,6 @@ public interface InterrogaVista {
 
 	Llamada getLlamada();
 
+	int getCodFac();
+
 }

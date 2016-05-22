@@ -13,6 +13,7 @@ import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -23,6 +24,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import tarifas.Tarifa;
+import utilidades.FechaToString;
 import controlador.Controlador;
 import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
@@ -40,8 +42,8 @@ public class Ventana implements InformaVista, InterrogaVista {
 	private JScrollPane tablaCli; 
 	private Escuchador escuchador;
 	private FormularioCliente formCliente;
-	private VentanaLlamadas abajo;
-	private VentanaFacturas facturas;
+	private VentanaLlamadas ventanaLlamadas;
+	private VentanaFacturas ventanaFacturas;
 	private JFrame frame;
 	private JButton arriba;
 	private AccionesCliente botonesCliente;
@@ -72,7 +74,8 @@ public class Ventana implements InformaVista, InterrogaVista {
 	
 	public void GUI(){
 		frame = new JFrame();
-		frame.setLayout(new GridLayout(4,1));
+		JPanel panelTablas = new JPanel();
+		panelTablas.setLayout(new GridLayout(3,1));
 		formCliente = new FormularioCliente(this);
 		formCliente.setVisible(false);		
 		
@@ -87,18 +90,20 @@ public class Ventana implements InformaVista, InterrogaVista {
 		arriba = new JButton("Add");
 		arriba.addActionListener(escuchador);
 		botonesCliente = new AccionesCliente(this);		
-		frame.getContentPane().add(botonesCliente, BorderLayout.NORTH);
-		frame.getContentPane().add(tablaCli, BorderLayout.CENTER);	
+		frame.getContentPane().add(botonesCliente, BorderLayout.NORTH);			
 		
-		abajo = new VentanaLlamadas(this);
-		abajo.setVisible(false);
+		ventanaLlamadas = new VentanaLlamadas(this);
+		ventanaLlamadas.setVisible(false);
 		
-		frame.getContentPane().add(abajo, BorderLayout.SOUTH);
+		ventanaFacturas = new VentanaFacturas(this);
+		ventanaFacturas.setVisible(false);
 		
-		facturas = new VentanaFacturas(this);
-		facturas.setVisible(false);
+		panelTablas.add(tablaCli);
+		panelTablas.add(ventanaLlamadas);
+		panelTablas.add(ventanaFacturas);
 		
-		frame.getContentPane().add(facturas, BorderLayout.SOUTH);
+		frame.getContentPane().add(panelTablas, BorderLayout.CENTER);
+		
 		frame.pack();
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
@@ -156,8 +161,8 @@ public class Ventana implements InformaVista, InterrogaVista {
 				int i = tabla.getSelectedRow();				
 				if(i>=0){		
 					//filtramos los eventos que no devuelvan -1
-					abajo.setVisible(true);
-					facturas.setVisible(true);
+					ventanaLlamadas.setVisible(true);
+					ventanaFacturas.setVisible(true);
 					Cliente aux = null;
 					try {
 						aux = modelo.getCliente((String)tablaClientes.getValueAt(i, 0));
@@ -166,8 +171,8 @@ public class Ventana implements InformaVista, InterrogaVista {
 				}				 	
 			 }
 			 try {
-					abajo.nuevaLlamada();
-					facturas.nuevaFactura();
+					ventanaLlamadas.nuevaLlamada();
+					ventanaFacturas.nuevaFactura();
 			 } catch (ClienteNoSeleccionadoException e1) { }
 		}
     }
@@ -188,6 +193,11 @@ public class Ventana implements InformaVista, InterrogaVista {
 	}
 	
 	@Override
+	public int getCodFac() {
+		return botonesCliente.getVentanaBuscarFactura().getCodFac();
+	}
+	
+	@Override
 	public Calendar getFechaInicio() throws FechaInvalidaException {
 	    return botonesCliente.getVentanaFiltrar().getFechaInicio();
 	}
@@ -204,46 +214,50 @@ public class Ventana implements InformaVista, InterrogaVista {
 		inicializarTablaClientes();
 		tabla.setModel(tablaClientes);
 		//A partir de clientes pasamos a un array de objetos que hará de fila, y añadimos a la tabla
-		Object[] col = new Object[2];
+		Object[] col = new Object[5];
 		for (Cliente c : clientes){
 			col[0]=c.getNIF();
 			col[1]=c.getNombre();
+			col[2]=c.getEmail();
+			col[3]=FechaToString.toString(c.getFecha());
+			col[4]=c.getTarifa();
 			((DefaultTableModel) tabla.getModel()).addRow(col);
 		}
 	}
 	
 	public void inicializarTablaClientes(){
 		tablaClientes = new DefaultTableModel();
-		Object[] nombreCol = {"NIF","Nombre"};
+		Object[] nombreCol = {"NIF","Nombre","Email","Fecha alta","Tarifa"};
 		tablaClientes.setColumnIdentifiers(nombreCol);			
 	}
 		
 	@Override
 	public void nuevaLlamada() throws ClienteNoSeleccionadoException{
-		abajo.nuevaLlamada();
+		ventanaLlamadas.nuevaLlamada();
 	}
 	
 	@Override
 	public void nuevaFactura() throws ClienteNoSeleccionadoException{
-		facturas.nuevaFactura();
+		ventanaFacturas.nuevaFactura();
 	}
 	
 	@Override
 	public Llamada getLlamada(){
-		return abajo.getLlamada();
+		return ventanaLlamadas.getLlamada();
 	}	
 	
 	public void clearSelection(){
 		tabla.clearSelection();
 		modelo.selectCliente(null);
-		abajo.setVisible(false);
-		facturas.setVisible(false);
+		ventanaLlamadas.setVisible(false);
+		ventanaFacturas.setVisible(false);
 	}
 	
 	public void exitProcedure() {
 	    frame.dispose();
 	    System.exit(0);
 	}
+
 
 	
 }

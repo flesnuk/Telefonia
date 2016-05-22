@@ -11,7 +11,9 @@ import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
+import excepciones.CodigoFacturaException;
 import excepciones.FechaInvalidaException;
+import facturas.Factura;
 
 public class ImplementacionControlador implements Controlador {
 	
@@ -51,6 +53,11 @@ public class ImplementacionControlador implements Controlador {
 	@Override
 	public Cliente buscarCliente() throws ClienteNoEncontradoException {
 		return modelo.getCliente(vista.getNIF());
+	}
+
+	@Override
+	public Factura buscarFactura() throws CodigoFacturaException {
+		return modelo.getFactura(vista.getCodFac());
 	}
 
 	@Override

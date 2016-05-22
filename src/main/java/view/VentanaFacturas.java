@@ -74,7 +74,7 @@ public class VentanaFacturas extends JPanel{
 	
 	public void inicializarTablaClientes(){
 		tablaLlamadas = new DefaultTableModel();
-		Object[] nombreCol = {"Numero","Total","Fecha"};
+		Object[] nombreCol = {"Numero","Fecha","Total"};
 		tablaLlamadas.setColumnIdentifiers(nombreCol);		
 	}
 	
@@ -86,8 +86,8 @@ public class VentanaFacturas extends JPanel{
 		Object[] col = new Object[3];
 		for (Factura f : facturas){			
 			col[0]=f.getCodfac();
-			col[1]=f.getPrecio();
-			col[2]=FechaToString.toString(f.getFecha());
+			col[1]=FechaToString.toString(f.getFecha());
+			col[2]=f.getPrecio();
 			((DefaultTableModel) tabla.getModel()).addRow(col);			
 		}
 	}

@@ -4,7 +4,9 @@ import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
+import excepciones.CodigoFacturaException;
 import excepciones.FechaInvalidaException;
+import facturas.Factura;
 
 public interface Controlador {
 
@@ -15,7 +17,9 @@ public interface Controlador {
 
 	void cambiarTarifa() throws ClienteNoSeleccionadoException;
 
-	Cliente buscarCliente() throws ClienteNoEncontradoException;
+	Cliente buscarCliente() throws ClienteNoEncontradoException;	
+
+	Factura buscarFactura() throws CodigoFacturaException;
 
 	void borrarCliente() throws ClienteNoEncontradoException,
 			ClienteNoSeleccionadoException;
@@ -37,5 +41,6 @@ public interface Controlador {
 	void deshacerFiltraLlamadas() throws ClienteNoSeleccionadoException;
 
 	void deshacerFiltraFacturas() throws ClienteNoSeleccionadoException;
+
 
 }

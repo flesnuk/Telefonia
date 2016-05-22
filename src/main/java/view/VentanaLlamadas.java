@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Collection;
 
 import javax.swing.JButton;
@@ -75,7 +76,7 @@ public class VentanaLlamadas extends JPanel{
 	
 	public void inicializarTablaClientes(){
 		tablaLlamadas = new DefaultTableModel();
-		Object[] nombreCol = {"Numero","Duracion","Fecha"};
+		Object[] nombreCol = {"Numero","Duracion","Fecha","Hora"};
 		tablaLlamadas.setColumnIdentifiers(nombreCol);		
 	}
 	
@@ -84,11 +85,12 @@ public class VentanaLlamadas extends JPanel{
 		inicializarTablaClientes();		
 		tabla.setModel(tablaLlamadas);
 		if (llamadas==null) return;
-		Object[] col = new Object[3];
+		Object[] col = new Object[4];
 		for (Llamada l : llamadas){			
 			col[0]=l.getTelefono();
 			col[1]=l.getDuracion();
 			col[2]=FechaToString.toString(l.getFecha());
+			col[3]=l.getFecha().get(Calendar.HOUR_OF_DAY)+":"+l.getFecha().get(Calendar.MINUTE);
 			((DefaultTableModel) tabla.getModel()).addRow(col);			
 		}
 	}

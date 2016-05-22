@@ -80,7 +80,7 @@ public class Gestor implements Serializable{
 		return gc.getCliente(NIF);		
 	}
 	
-	public Factura factura(int n){
+	public Factura factura(int n) throws CodigoFacturaException{
 		return gf.getFactura(n);		
 	}
 	

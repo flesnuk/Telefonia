@@ -15,6 +15,7 @@ import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
+import excepciones.CodigoFacturaException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
 import llamadas.Llamada;
@@ -75,7 +76,13 @@ public class Core {
 	}
 	
 	public static Factura factura(int n){
-		return g.factura(n);
+		try {
+			return g.factura(n);
+		} catch (CodigoFacturaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static String clientes(){

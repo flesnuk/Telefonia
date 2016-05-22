@@ -9,7 +9,9 @@ import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
+import excepciones.CodigoFacturaException;
 import excepciones.FechaInvalidaException;
+import facturas.Factura;
 
 public interface CambioModelo {
 
@@ -43,5 +45,7 @@ public interface CambioModelo {
 	void deshacerFiltraLlamadas() throws ClienteNoSeleccionadoException;
 
 	void deshacerFiltraFacturas() throws ClienteNoSeleccionadoException;
+
+	Factura getFactura(int codFac) throws CodigoFacturaException;
 
 }

@@ -18,6 +18,7 @@ public class AccionesCliente extends JPanel{
 	private JButton anyade;
 	private JButton borrar;
 	private JButton buscarNIF;
+	private JButton buscarFactura;
 	private JButton cambiarTarifa;
 	private JButton JBfiltrar;
 	private JButton cargar;
@@ -25,6 +26,7 @@ public class AccionesCliente extends JPanel{
 	private FormularioCliente formCliente;
 	private VentanaCambioTarifa formTarifa;	
 	private VentanaBuscarCliente buscarCliente;
+	private VentanaBuscarFactura ventanaBuscarFactura;
 	private VentanaFiltrar filtrar;
 	
 	public AccionesCliente(Ventana vista){
@@ -34,6 +36,7 @@ public class AccionesCliente extends JPanel{
 		super.add(anyade);
 		super.add(borrar);
 		super.add(buscarNIF);
+		super.add(buscarFactura);
 		super.add(cambiarTarifa);	
 		super.add(JBfiltrar);	
 		super.add(guardar);	
@@ -47,14 +50,16 @@ public class AccionesCliente extends JPanel{
 		anyade = new JButton("Añadir cliente...");
 		borrar = new JButton("Borrar cliente");
 		buscarNIF = new JButton("Buscar cliente...");
+		buscarFactura = new JButton("Buscar factura...");
 		cambiarTarifa = new JButton("Cambiar tarifa...");
 		JBfiltrar = new JButton("Filtrar...");
 		guardar = new JButton("Guardar");
-		cargar = new JButton("Cargar...");
+		cargar = new JButton("Cargar");
 		deseleccionar.addActionListener(escuchador);
 		anyade.addActionListener(escuchador);
 		borrar.addActionListener(escuchador);
 		buscarNIF.addActionListener(escuchador);
+		buscarFactura.addActionListener(escuchador);
 		cambiarTarifa.addActionListener(escuchador);
 		JBfiltrar.addActionListener(escuchador);
 		guardar.addActionListener(escuchador);
@@ -64,6 +69,8 @@ public class AccionesCliente extends JPanel{
 		formTarifa = new VentanaCambioTarifa(vista);
 		buscarCliente = new VentanaBuscarCliente(vista);
 		buscarCliente.setVisible(false);
+		ventanaBuscarFactura = new VentanaBuscarFactura(vista);
+		ventanaBuscarFactura.setVisible(false);
 		filtrar = new VentanaFiltrar(vista);
 		filtrar.setVisible(false);
 	}
@@ -84,13 +91,15 @@ public class AccionesCliente extends JPanel{
 				}
             } else if(texto.equals("Buscar cliente...")){
             	buscarCliente.setVisible(true);
+            } else if(texto.equals("Buscar factura...")){
+            	ventanaBuscarFactura.setVisible(true);
             } else if(texto.equals("Cambiar tarifa...")){
             	formTarifa.setVisible(true);
             } else if(texto.equals("Filtrar...")){
             	filtrar.setVisible(true);
             } else if(texto.equals("Guardar")){
             	vista.getControlador().escribir();
-            } else if(texto.equals("Cargar...")){
+            } else if(texto.equals("Cargar")){
             	vista.getControlador().cargar();
             } else {
             	vista.clearSelection();
@@ -108,6 +117,10 @@ public class AccionesCliente extends JPanel{
 	
 	public VentanaBuscarCliente getVentanaBuscarCliente(){
 		return buscarCliente;
+	}
+	
+	public VentanaBuscarFactura getVentanaBuscarFactura(){
+		return ventanaBuscarFactura;
 	}
 	
 	public VentanaFiltrar getVentanaFiltrar(){

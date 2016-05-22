@@ -14,6 +14,7 @@ import clientes.Cliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.ClienteNoSeleccionadoException;
 import excepciones.ClienteYaExisteException;
+import excepciones.CodigoFacturaException;
 import excepciones.FechaInvalidaException;
 import excepciones.OrdenFechasException;
 import facturas.Factura;
@@ -54,7 +55,6 @@ public class ImplementacionModelo implements CambioModelo, InterrogaModelo {
 		try {
 			fis = new FileInputStream("gestor.bin");
 		} catch (FileNotFoundException e) {
-			System.out.println("Fichero aún no generado");
 			g = new Gestor();
 		}
 		if(fis!=null){
@@ -75,6 +75,11 @@ public class ImplementacionModelo implements CambioModelo, InterrogaModelo {
 	@Override
 	public Cliente getCliente(String NIF) throws ClienteNoEncontradoException{
 		return g.cliente(NIF);
+	}
+
+	@Override
+	public Factura getFactura(int codFac) throws CodigoFacturaException {
+		return g.factura(codFac);
 	}
 	
 	@Override
@@ -130,7 +135,8 @@ public class ImplementacionModelo implements CambioModelo, InterrogaModelo {
 
 	@Override
 	public void cambiarTarifa(Tarifa nuevaTarifa) throws ClienteNoSeleccionadoException {
-		g.getActual().setTarifa(nuevaTarifa);		
+		g.getActual().setTarifa(nuevaTarifa);	
+		vista.nuevoCliente();
 	}
 
 	@Override
