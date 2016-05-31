@@ -46,7 +46,7 @@ public class Ventana implements InformaVista, InterrogaVista {
 	private VentanaFacturas ventanaFacturas;
 	private JFrame frame;
 	private JButton arriba;
-	private AccionesCliente botonesCliente;
+	private MenuSimple menuSimple;
 	
 	public Ventana(){
 		
@@ -88,9 +88,7 @@ public class Ventana implements InformaVista, InterrogaVista {
 		nuevoCliente();
 		
 		arriba = new JButton("Add");
-		arriba.addActionListener(escuchador);
-		botonesCliente = new AccionesCliente(this);		
-		frame.getContentPane().add(botonesCliente, BorderLayout.NORTH);			
+		arriba.addActionListener(escuchador);		
 		
 		ventanaLlamadas = new VentanaLlamadas(this);
 		ventanaLlamadas.setVisible(false);
@@ -108,6 +106,8 @@ public class Ventana implements InformaVista, InterrogaVista {
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		menuSimple = new MenuSimple(this);
+		frame.setJMenuBar(menuSimple.getMenu());
 		frame.addWindowListener(new WindowAdapter()
 		{
 			@Override
@@ -179,32 +179,32 @@ public class Ventana implements InformaVista, InterrogaVista {
 	
 	@Override
 	public Cliente getPersona(){		
-		return botonesCliente.getFormularioCliente().getCliente();
+		return menuSimple.getFormularioCliente().getCliente();
 	}
 	
 	@Override
 	public Tarifa getNuevaTarifa(){
-		return botonesCliente.getVentanaCambioTarifa().getNuevaTarifa();
+		return menuSimple.getVentanaCambioTarifa().getNuevaTarifa();
 	}
 	
 	@Override
 	public String getNIF() {
-		return botonesCliente.getVentanaBuscarCliente().getNIF();
+		return menuSimple.getVentanaBuscarCliente().getNIF();
 	}
 	
 	@Override
 	public int getCodFac() {
-		return botonesCliente.getVentanaBuscarFactura().getCodFac();
+		return menuSimple.getVentanaBuscarFactura().getCodFac();
 	}
 	
 	@Override
 	public Calendar getFechaInicio() throws FechaInvalidaException {
-	    return botonesCliente.getVentanaFiltrar().getFechaInicio();
+	    return menuSimple.getVentanaFiltrar().getFechaInicio();
 	}
 	
 	@Override
 	public Calendar getFechaFin() throws FechaInvalidaException {
-	    return botonesCliente.getVentanaFiltrar().getFechaFin();
+	    return menuSimple.getVentanaFiltrar().getFechaFin();
 	}
 	
 	
