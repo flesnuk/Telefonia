@@ -2,7 +2,7 @@ package tarifas;
 
 import java.util.Calendar;
 
-public class TarifaEntreHoras extends Tarifa {
+public class TarifaEntreHoras extends TarifaExtra {
 	private static final long serialVersionUID = 8215983900468070553L;
 	
 	private Tarifa tar;
@@ -10,7 +10,7 @@ public class TarifaEntreHoras extends Tarifa {
 	private int hora_final;
 
 	public TarifaEntreHoras(Tarifa tarifa, double nuevo, int hora_inicio, int hora_final) {
-		super(nuevo);
+		super(tarifa,nuevo);
 		tar = tarifa;	
 		this.hora_inicio=hora_inicio;
 		this.hora_final=hora_final;
@@ -24,11 +24,6 @@ public class TarifaEntreHoras extends Tarifa {
 			return tar.getPrecio(fecha);
 		else
 			return super.getPrecio();
-	}
-
-	@Override
-	public String toString() {
-		return tar.toString() + "\n+ Tarifa ";
 	}
 
 }

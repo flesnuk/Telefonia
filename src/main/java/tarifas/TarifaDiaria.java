@@ -2,14 +2,14 @@ package tarifas;
 
 import java.util.Calendar;
 
-public class TarifaDiaria extends Tarifa {
+public class TarifaDiaria extends TarifaExtra {
 	private static final long serialVersionUID = 8215983900468070553L;
 	
 	private Tarifa tar;
 	private int dia;
 
 	public TarifaDiaria(Tarifa tarifa, double nuevo, int dia) {
-		super(nuevo);
+		super(tarifa,nuevo);
 		tar = tarifa;	
 		this.dia=dia;
 	}
@@ -22,11 +22,6 @@ public class TarifaDiaria extends Tarifa {
 			return tar.getPrecio(fecha);
 		else
 			return super.getPrecio();
-	}
-
-	@Override
-	public String toString() {
-		return tar.toString() + "\n+ Tarifa ";
 	}
 
 }
