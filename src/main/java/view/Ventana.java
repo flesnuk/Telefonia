@@ -116,9 +116,7 @@ public class Ventana implements InformaVista, InterrogaVista {
 		        try {
 					modelo.escribir();
 					exitProcedure();
-				} catch (IOException e1) {
-					
-				}
+				} catch (IOException e1) {}
 		    }
 		});
 	}

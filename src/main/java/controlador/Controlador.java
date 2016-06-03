@@ -42,5 +42,7 @@ public interface Controlador {
 
 	void deshacerFiltraFacturas() throws ClienteNoSeleccionadoException;
 
+	void nuevo();
+
 
 }

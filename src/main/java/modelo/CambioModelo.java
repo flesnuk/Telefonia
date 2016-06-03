@@ -48,4 +48,6 @@ public interface CambioModelo {
 
 	Factura getFactura(int codFac) throws CodigoFacturaException;
 
+	void nuevo();
+
 }

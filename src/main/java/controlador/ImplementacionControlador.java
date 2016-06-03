@@ -119,6 +119,12 @@ public class ImplementacionControlador implements Controlador {
 		modelo.deshacerFiltraFacturas();
 	}
 
+	@Override
+	public void nuevo() {
+		modelo.nuevo();
+		
+	}
+
 	
 	
 	

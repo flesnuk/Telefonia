@@ -33,39 +33,60 @@ public class MenuSimple {
 	
 	private void inicializa(){
 		menuBar = new JMenuBar();
-		JMenu menu = new JMenu("Menu");
-		menu.getAccessibleContext().setAccessibleDescription(
-		        "Hola");
-		JMenuItem menuItem = new JMenuItem("Deseleccionar");
-		menuItem.addActionListener(new Escuchador());
-		JMenuItem menuItem2 = new JMenuItem("Añadir cliente...");
-		menuItem2.addActionListener(new Escuchador());
-		JMenuItem menuItem3 = new JMenuItem("Borrar cliente");
-		menuItem3.addActionListener(new Escuchador());
-		JMenuItem menuItem4 = new JMenuItem("Buscar cliente...");
-		menuItem4.addActionListener(new Escuchador());
-		JMenuItem menuItem5 = new JMenuItem("Buscar factura...");
-		menuItem5.addActionListener(new Escuchador());
-		JMenuItem menuItem6 = new JMenuItem("Cambiar tarifa...");
-		menuItem6.addActionListener(new Escuchador());
-		JMenuItem menuItem7 = new JMenuItem("Filtrar...");
-		menuItem7.addActionListener(new Escuchador());
-		JMenuItem menuItem8 = new JMenuItem("Guardar");
-		menuItem8.addActionListener(new Escuchador());
-		JMenuItem menuItem9 = new JMenuItem("Cargar");
-		menuItem9.addActionListener(new Escuchador());
+		JMenu menuArchivo = new JMenu("Archivo");
+		menuArchivo.getAccessibleContext().setAccessibleDescription(
+		        "Archivo");
+		
+		JMenu menuCliente = new JMenu("Cliente");
+		menuCliente.getAccessibleContext().setAccessibleDescription(
+		        "Cliente");		
+		
+		JMenu menuFacturas = new JMenu("Facturas");
+		menuFacturas.getAccessibleContext().setAccessibleDescription(
+		        "Buscar");
+		
+		JMenu menuFiltrar = new JMenu("Filtrar");
+		menuFiltrar.getAccessibleContext().setAccessibleDescription(
+		        "Filtrar");
+		
+		JMenuItem menuItemDeselect = new JMenuItem("Deseleccionar");
+		menuItemDeselect.addActionListener(new Escuchador());
+		JMenuItem menuItemAnadirCli = new JMenuItem("Añadir cliente...");
+		menuItemAnadirCli.addActionListener(new Escuchador());
+		JMenuItem menuItemBorrarCli = new JMenuItem("Borrar cliente");
+		menuItemBorrarCli.addActionListener(new Escuchador());
+		JMenuItem menuItemBuscarCli = new JMenuItem("Buscar cliente...");
+		menuItemBuscarCli.addActionListener(new Escuchador());
+		JMenuItem menuItemBuscarFac = new JMenuItem("Buscar factura...");
+		menuItemBuscarFac.addActionListener(new Escuchador());
+		JMenuItem menuItemCambiarTar = new JMenuItem("Cambiar tarifa...");
+		menuItemCambiarTar.addActionListener(new Escuchador());
+		JMenuItem menuItemFiltrar = new JMenuItem("Filtrar...");
+		menuItemFiltrar.addActionListener(new Escuchador());
+		JMenuItem menuItemGuardar = new JMenuItem("Guardar");
+		menuItemGuardar.addActionListener(new Escuchador());
+		JMenuItem menuItemCargar = new JMenuItem("Cargar");
+		menuItemCargar.addActionListener(new Escuchador());
+		JMenuItem menuItemNuevo = new JMenuItem("Nuevo");
+		menuItemNuevo.addActionListener(new Escuchador());
 		
 		
-		menu.add(menuItem);
-		menu.add(menuItem2);
-		menu.add(menuItem3);
-		menu.add(menuItem4);
-		menu.add(menuItem5);
-		menu.add(menuItem6);
-		menu.add(menuItem7);
-		menu.add(menuItem8);
-		menu.add(menuItem9);
-		menuBar.add(menu);
+		menuCliente.add(menuItemDeselect);
+		menuCliente.add(menuItemAnadirCli);
+		menuCliente.add(menuItemBorrarCli);
+		menuCliente.add(menuItemBuscarCli);
+		menuCliente.add(menuItemCambiarTar);
+		menuFacturas.add(menuItemBuscarFac);
+		menuFiltrar.add(menuItemFiltrar);
+
+		menuArchivo.add(menuItemNuevo);
+		menuArchivo.add(menuItemGuardar);
+		menuArchivo.add(menuItemCargar);
+		
+		menuBar.add(menuArchivo);
+		menuBar.add(menuCliente);
+		menuBar.add(menuFacturas);
+		menuBar.add(menuFiltrar);
 		
 		
 		formCliente = new FormularioCliente(vista);
@@ -102,6 +123,8 @@ public class MenuSimple {
 	            	formTarifa.setVisible(true);
 	            } else if(texto.equals("Filtrar...")){
 	            	filtrar.setVisible(true);
+	            } else if(texto.equals("Nuevo")){
+	            	vista.getControlador().nuevo();
 	            } else if(texto.equals("Guardar")){
 	            	vista.getControlador().escribir();
 	            } else if(texto.equals("Cargar")){

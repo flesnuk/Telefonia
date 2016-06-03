@@ -180,6 +180,20 @@ public class ImplementacionModelo implements CambioModelo, InterrogaModelo {
 		facturasFiltrados=null;
 		vista.nuevaFactura();
 	}
+
+	@Override
+	public void nuevo() {
+		g = new Gestor();
+		vista.nuevoCliente();
+		try {
+			vista.nuevaLlamada();
+		} catch (ClienteNoSeleccionadoException e1) {
+		}
+		try {
+			vista.nuevaFactura();
+		} catch (ClienteNoSeleccionadoException e) {
+		}
+	}
 	
 	
 }
